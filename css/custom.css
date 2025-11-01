@@ -1,0 +1,643 @@
+:root {
+  --trans-light: rgba(251, 235, 236, 0.48);
+  --trans-dark: rgba(25, 25, 25, 0.48);
+  --border-style: 1px solid rgb(169, 169, 169);
+  --backdrop-filter: blur(5px) saturate(150%);
+}
+
+/* 页脚与头图透明 */
+#footer {
+  background: transparent !important;
+}
+#page-header {
+  background: transparent !important;
+}
+
+/* 白天模式遮罩透明 */
+#footer::before {
+  background: transparent !important;
+}
+#page-header::before {
+  background: transparent !important;
+}
+
+/* 夜间模式遮罩透明 */
+[data-theme="dark"] #footer::before {
+  background: transparent !important;
+}
+[data-theme="dark"] #page-header::before {
+  background: transparent !important;
+}
+
+@font-face {
+  /* 为载入的字体取名字(随意) */
+  font-family: 'YSHST';	
+  /* 字体文件地址(相对或者绝对路径都可以) */
+  src: url(/font/优设好身体.woff2);
+  /* 字体格式，woff2可以省略，但建议加上 */
+  font-display: block;
+  /* 字体样式 */
+  font-style: normal;
+  /* 字体粗细 */
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url(/font/霞鹜文楷.woff2) format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* tzy页脚样式 */
+#ft {
+  max-width: 1200px;
+  margin: 0 auto 12px;
+  display: flex;
+  color: rgb(255 255 255 / 80%) !important;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+#footer-wrap a {
+  border-radius: 30px;
+}
+
+#footer-wrap {
+  padding: 20px 20px;
+}
+
+/* 页脚心跳动画 */
+#heartbeat {
+  color: red;
+  animation: iconAnimate 1s ease-in-out infinite;
+}
+
+@keyframes iconAnimate {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  10%,
+  30% {
+    transform: scale(0.9);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: scale(1.1);
+  }
+  50%,
+  70% {
+    transform: scale(1.1);
+  }
+}
+
+/**************************************************
+ * Butterfly主题仿Fomal.cc文章网格布局 - 适配透明效果版本
+ **************************************************/
+
+/* 主内容区域布局调整 */
+#content-inner {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* 文章区域容器 */
+#recent-posts.recent-posts.nc.grid-layout {
+  margin: 0;
+  flex: 1;
+  min-height: 0;
+  order: 1;
+}
+
+/* 右侧边栏容器 */
+#aside-content {
+  width: 300px;
+  flex-shrink: 0;
+  order: 2;
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
+}
+
+/* 文章网格布局 */
+#recent-posts .recent-post-items.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* 文章卡片样式 - 应用透明效果 */
+#recent-posts .recent-post-item.grid-card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 320px;
+  position: relative;
+  background: var(--trans-light);
+  backdrop-filter: var(--backdrop-filter);
+  -webkit-backdrop-filter: var(--backdrop-filter);
+  border: var(--border-style);
+}
+
+/* 暗色模式文章卡片 */
+[data-theme="dark"] #recent-posts .recent-post-item.grid-card {
+  background: var(--trans-dark);
+}
+
+/* 封面图片样式 */
+#recent-posts .recent-post-item.grid-card .post_cover {
+  height: 200px;
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+  flex-shrink: 0;
+}
+
+#recent-posts .recent-post-item.grid-card .post-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.5s ease;
+}
+
+#recent-posts .recent-post-item.grid-card:hover .post-bg {
+  transform: scale(1.08);
+}
+
+#recent-posts .recent-post-item.grid-card:hover {
+  transform: translateY(-5px);
+}
+
+/* 内容区域调整 - 应用透明效果 */
+#recent-posts .recent-post-item.grid-card .recent-post-info {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  background: var(--trans-light);
+  backdrop-filter: var(--backdrop-filter);
+  -webkit-backdrop-filter: var(--backdrop-filter);
+}
+
+/* 暗色模式内容区域 */
+[data-theme="dark"] #recent-posts .recent-post-item.grid-card .recent-post-info {
+  background: var(--trans-dark);
+}
+
+/* 标题区域 */
+#recent-posts .recent-post-item.grid-card .article-title {
+  line-clamp: 2;
+  box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  min-height: 2.6em;
+  flex-shrink: 0;
+  font-family: 'YouSheBody', 'LXGW WenKai', sans-serif;
+}
+
+/* 元信息样式 */
+#recent-posts .recent-post-item.grid-card .article-meta-wrap {
+  margin-bottom: 10px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+  font-family: 'YouSheBody', 'LXGW WenKai', sans-serif;
+}
+
+#recent-posts .recent-post-item.grid-card .post-meta-date i,
+#recent-posts .recent-post-item.grid-card .article-meta i {
+  margin-right: 3px;
+  font-size: 0.7rem;
+}
+
+#recent-posts .recent-post-item.grid-card .article-meta-separator {
+  margin: 0 6px;
+}
+
+#recent-posts .recent-post-item.grid-card .article-meta__categories,
+#recent-posts .recent-post-item.grid-card .article-meta__tags {
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 0.75rem;
+  font-family: 'YouSheBody', 'LXGW WenKai', sans-serif;
+}
+
+/* 摘要内容样式 */
+#recent-posts .recent-post-item.grid-card .content {
+  line-clamp: 2;
+  box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+  font-size: 0.8rem;
+  flex: 1;
+  margin-bottom: 8px;
+  min-height: 3em;
+  font-family: 'YouSheBody', 'LXGW WenKai', sans-serif;
+}
+
+/* 无封面文章样式调整 */
+#recent-posts .recent-post-item.grid-card .recent-post-info.no-cover {
+  padding-top: 20px;
+  background: var(--trans-light);
+  backdrop-filter: var(--backdrop-filter);
+  -webkit-backdrop-filter: var(--backdrop-filter);
+}
+
+/* 暗色模式无封面文章 */
+[data-theme="dark"] #recent-posts .recent-post-item.grid-card .recent-post-info.no-cover {
+  background: var(--trans-dark);
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  #recent-posts .recent-post-items.grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+}
+
+@media (max-width: 1024px) {
+  #content-inner {
+    flex-direction: column;
+  }
+  
+  #aside-content {
+    width: 100%;
+    position: static;
+    order: 3;
+    margin-top: 30px;
+  }
+  
+  #recent-posts.recent-posts.nc.grid-layout {
+    order: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  #recent-posts .recent-post-items.grid-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  #recent-posts .recent-post-item.grid-card {
+    min-height: 300px;
+  }
+  
+  #recent-posts .recent-post-item.grid-card .post_cover {
+    height: 160px;
+  }
+  
+  #recent-posts .recent-post-item.grid-card .recent-post-info {
+    padding: 14px;
+    background: var(--trans-light);
+    backdrop-filter: var(--backdrop-filter);
+    -webkit-backdrop-filter: var(--backdrop-filter);
+  }
+  
+  [data-theme="dark"] #recent-posts .recent-post-item.grid-card .recent-post-info {
+    background: var(--trans-dark);
+  }
+  
+  #recent-posts .recent-post-item.grid-card .article-title {
+    line-clamp: 2;
+    box-orient: vertical;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 1.1rem;
+    min-height: 2.4em;
+  }
+  
+  #recent-posts .recent-post-item.grid-card .content {
+    line-clamp: 2;
+    box-orient: vertical;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 0.78rem;
+  }
+}
+
+/* 确保整体布局协调 */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#page-header,
+#recent-posts,
+#pagination {
+  flex-shrink: 0;
+}
+/**************************************************
+ * 文章网格布局样式结束 - 透明效果适配版本
+ **************************************************/
+
+
+/**************************************************
+ * 页脚文字颜色修改为 #fbebec
+ **************************************************/
+
+/* 亮色模式页脚文字颜色 */
+[data-theme="light"] #footer,
+[data-theme="light"] #footer *:not(a:hover) {
+  color: #fbebec !important;
+}
+
+/* 暗色模式页脚文字颜色 */
+[data-theme="dark"] #footer,
+[data-theme="dark"] #footer *:not(a:hover) {
+  color: #e8d6d8 !important;
+}
+
+/* 链接悬停效果 */
+#footer a:hover {
+  color: #d4a8ab !important; /* 使用玫瑰色作为悬停色 */
+}
+
+
+/* 个人信息卡片背景图 */
+[data-theme="light"] #aside-content > .card-widget.card-info {
+  background-image: url(https://s2.loli.net/2025/11/01/Hjgk91JGYu8eIKX.png);
+  background-repeat: no-repeat;
+  background-attachment: inherit;
+  background-size: 100%;
+}
+[data-theme="dark"] #aside-content > .card-widget.card-info {
+  background-image: url(https://tuchuang.voooe.cn/images/2023/02/28/aurora.webp);
+  background-repeat: no-repeat;
+  background-attachment: inherit;
+  background-size: 100%;
+}
+ 
+
+
+
+/* 一级菜单居中 */
+#nav .menus_items {
+  position: absolute !important;
+  width: fit-content !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+/* 子菜单横向展示 */
+#nav .menus_items .menus_item:hover .menus_item_child {
+  display: flex !important;
+  flex-direction: row !important; /* 确保横向排列 */
+  flex-wrap: nowrap !important; /* 防止换行 */
+}
+
+/* 子菜单位于父级中间 */
+.menus_items .menus_item .menus_item_child {
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  display: none; /* 默认隐藏 */
+  position: absolute;
+  top: 100%; /* 在父级下方 */
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  padding: 8px 0;
+  min-width: max-content; /* 确保有足够宽度 */
+}
+
+/* 子菜单项横向排列 */
+.menus_items .menus_item_child li {
+  display: inline-block !important; /* 横向排列 */
+  white-space: nowrap; /* 防止文字换行 */
+}
+
+/* 子菜单链接样式 */
+.menus_items .menus_item_child a {
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #333;
+}
+
+.menus_items .menus_item_child a:hover {
+  background: #f5f5f5;
+}
+
+/* 侧边栏个人信息卡片动态渐变色 */
+/* #aside-content > .card-widget.card-info {
+  background: linear-gradient(
+    -45deg,
+    #e8d8b9,
+    #eccec5,
+    #a3e9eb,
+    #bdbdf0,
+    #eec1ea
+  );
+  box-shadow: 0 0 5px rgb(66, 68, 68);
+  position: relative;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 10s ease infinite;
+  -moz-animation: Gradient 10s ease infinite;
+  animation: Gradient 10s ease infinite !important;
+}
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} */
+
+
+
+/* 首页文章卡片 */
+#recent-posts > .recent-post-item {
+  background: var(--trans-light);
+  backdrop-filter: var(--backdrop-filter);
+  border-radius: 25px;
+  border: var(--border-style);
+}
+
+/* 首页侧栏卡片 */
+#aside-content .card-widget {
+  background: var(--trans-light);
+  backdrop-filter: var(--backdrop-filter);
+  border-radius: 18px;
+  border: var(--border-style);
+}
+
+/* 文章页、归档页、普通页面 */
+div#post,
+div#page,
+div#archive {
+  background: var(--trans-light);
+  backdrop-filter: var(--backdrop-filter);
+  border: var(--border-style);
+  border-radius: 20px;
+}
+
+/* 导航栏 */
+#page-header.nav-fixed #nav {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: var(--backdrop-filter);
+}
+
+[data-theme="dark"] #page-header.nav-fixed #nav {
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* 夜间模式遮罩 */
+[data-theme="dark"] #recent-posts > .recent-post-item,
+[data-theme="dark"] #aside-content .card-widget,
+[data-theme="dark"] div#post,
+[data-theme="dark"] div#archive,
+[data-theme="dark"] div#page {
+  background: var(--trans-dark);
+}
+
+
+/* 夜间模式页脚页头遮罩透明 */
+[data-theme="dark"] #footer::before {
+  background: transparent !important;
+}
+[data-theme="dark"] #page-header::before {
+  background: transparent !important;
+}
+
+/* 阅读模式 */
+.read-mode #aside-content .card-widget {
+  background: rgba(158, 204, 171, 0.5) !important;
+}
+.read-mode div#post {
+  background: rgba(158, 204, 171, 0.5) !important;
+}
+
+/* 夜间模式下的阅读模式 */
+[data-theme="dark"] .read-mode #aside-content .card-widget {
+  background: rgba(25, 25, 25, 0.9) !important;
+  color: #ffffff;
+}
+[data-theme="dark"] .read-mode div#post {
+  background: rgba(25, 25, 25, 0.9) !important;
+  color: #ffffff;
+}
+
+
+/**************************************************
+ * 个人卡片作者状态框样式 - 悬停展开效果
+ **************************************************/
+
+.card-widget .card-info-avatar {
+  display: inline-block;
+  position: relative;
+}
+
+.card-info-avatar .author-status-box {
+  position: absolute;
+  bottom: 0;
+  left: calc(100% - 28px);
+  width: 28px;
+  height: 28px;
+  border: 1px solid #d0d7de;
+  border-radius: 2em;
+  background-color: #f6f8fa;
+  transition: 0.4s;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+[data-theme="dark"] .card-info-avatar .author-status-box {
+  background-color: #222222f2;
+  border: 1px solid #5c6060;
+}
+
+.card-info-avatar .author-status-box .author-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+.card-info-avatar .author-status-box:hover {
+  width: 105px;
+}
+
+.card-info-avatar .author-status-box:hover .author-status span {
+  width: 105px;
+  margin-left: 4px;
+}
+
+.card-info-avatar .author-status-box .author-status span {
+  width: 0;
+  font-size: 12px;
+  height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: 0.4s;
+  color: #8a6d6f;
+  font-family: 'YouSheBody', 'LXGW WenKai', sans-serif;
+}
+
+[data-theme="dark"] .card-info-avatar .author-status-box .author-status span {
+  color: #e8e8e8;
+}
+
+/* 适配您的fbebec色系 */
+.card-info-avatar .author-status-box {
+  background-color: #fbebec;
+  border: 1px solid #d4a8ab;
+}
+
+[data-theme="dark"] .card-info-avatar .author-status-box {
+  background-color: #1e1e1e;
+  border: 1px solid #5c6060;
+}
