@@ -7343,18 +7343,18 @@ button#go-up:hover #percent {
 
 
 /* 个人信息卡片背景图 */
-[data-theme="light"] #aside-content > .card-widget.card-info {
-  background-image: url(https://tuchuang.voooe.cn/images/2023/02/28/springBg.png);
+ [data-theme="light"] #aside-content > .card-widget.card-info {
+  background-image: url(https://s2.loli.net/2025/11/01/Hjgk91JGYu8eIKX.png);
   background-repeat: no-repeat;
   background-attachment: inherit;
   background-size: 100%;
 }
 [data-theme="dark"] #aside-content > .card-widget.card-info {
-  background-image: url(https://tuchuang.voooe.cn/images/2023/02/28/aurora.webp);
+  background-image: url(https://s2.loli.net/2025/11/01/Hjgk91JGYu8eIKX.png);
   background-repeat: no-repeat;
   background-attachment: inherit;
   background-size: 100%;
-}
+} 
 /* 头像呼吸灯 */
 [data-theme="light"] .avatar-img {
   animation: huxi_light 4s ease-in-out infinite;
@@ -7384,12 +7384,15 @@ button#go-up:hover #percent {
     box-shadow: 0px 0px 1px 1px #39c5bb;
   }
 }
-
 /* 个人信息Follow me按钮 */
 #aside-content > .card-widget.card-info > #card-info-btn {
-  background-color: var(--theme-color) !important;
+  background-color: rgba(251,235, 236, 0.58) !important;
   border-radius: 30px;
-  color: white;
+  color: #000000;
+}
+[data-theme="dark"] #aside-content > .card-widget.card-info > #card-info-btn {
+  background-color: var(--hlscrollbar-bg) !important;
+  color: var(--hl-color);
 }
 #aside-content > .card-widget.card-info > #card-info-btn:hover {
   background-color: var(--text-bg-hover) !important;
