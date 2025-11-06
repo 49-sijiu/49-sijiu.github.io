@@ -2,7 +2,115 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.fomal.cc/categories/index.html</loc>
+    <loc>https://hexo.sijiu.top/site/time/index.html</loc>
+    
+    <lastmod>2025-11-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/posts/a92bcbe3.html</loc>
+    
+    <lastmod>2025-11-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/social/link/index.html</loc>
+    
+    <lastmod>2025-11-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/personal/bb/index.html</loc>
+    
+    <lastmod>2025-11-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/personal/about/index.html</loc>
+    
+    <lastmod>2025-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/posts/54a8b5ac.html</loc>
+    
+    <lastmod>2025-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/posts/953d8475.html</loc>
+    
+    <lastmod>2025-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/posts/e7ca17f3.html</loc>
+    
+    <lastmod>2025-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/posts/dd8d0a83.html</loc>
+    
+    <lastmod>2025-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/posts/53e0d2c0.html</loc>
+    
+    <lastmod>2025-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/posts/a312f75b.html</loc>
+    
+    <lastmod>2025-11-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/posts/9daba997.html</loc>
+    
+    <lastmod>2025-10-30</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/categories/index.html</loc>
     
     <lastmod>2023-03-21</lastmod>
     
@@ -11,7 +119,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/tags/index.html</loc>
+    <loc>https://hexo.sijiu.top/tags/index.html</loc>
     
     <lastmod>2023-03-21</lastmod>
     
@@ -20,7 +128,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/box/gallery/index.html</loc>
+    <loc>https://hexo.sijiu.top/box/animation/index.html</loc>
     
     <lastmod>2023-03-21</lastmod>
     
@@ -29,7 +137,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/box/animation/index.html</loc>
+    <loc>https://hexo.sijiu.top/box/gallery/index.html</loc>
     
     <lastmod>2023-03-21</lastmod>
     
@@ -38,7 +146,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/box/nav/index.html</loc>
+    <loc>https://hexo.sijiu.top/box/nav/index.html</loc>
     
     <lastmod>2023-03-21</lastmod>
     
@@ -47,7 +155,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/life/music/index.html</loc>
+    <loc>https://hexo.sijiu.top/site/census/index.html</loc>
     
     <lastmod>2023-03-21</lastmod>
     
@@ -56,7 +164,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/life/games/index.html</loc>
+    <loc>https://hexo.sijiu.top/social/fcircle/index.html</loc>
     
     <lastmod>2023-03-21</lastmod>
     
@@ -65,88 +173,7 @@
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/site/census/index.html</loc>
-    
-    <lastmod>2023-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/personal/bb/index.html</loc>
-    
-    <lastmod>2023-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/social/fcircle/index.html</loc>
-    
-    <lastmod>2023-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/personal/about/index.html</loc>
-    
-    <lastmod>2023-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/life/movies/index.html</loc>
-    
-    <lastmod>2023-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/site/time/index.html</loc>
-    
-    <lastmod>2023-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/personal/love/index.html</loc>
-    
-    <lastmod>2023-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/social/link/index.html</loc>
-    
-    <lastmod>2023-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/posts/2013454d.html</loc>
-    
-    <lastmod>2022-10-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.fomal.cc/site/echarts/index.html</loc>
+    <loc>https://hexo.sijiu.top/site/echarts/index.html</loc>
     
     <lastmod>2022-09-10</lastmod>
     
@@ -156,23 +183,184 @@
   
 
   <url>
-    <loc>https://www.fomal.cc/</loc>
-    <lastmod>2025-10-30</lastmod>
+    <loc>https://hexo.sijiu.top/</loc>
+    <lastmod>2025-11-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://www.fomal.cc/tags/Markdown/</loc>
-    <lastmod>2025-10-30</lastmod>
+    <loc>https://hexo.sijiu.top/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2025-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.fomal.cc/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/</loc>
-    <lastmod>2025-10-30</lastmod>
+    <loc>https://hexo.sijiu.top/tags/%E5%AF%84%E6%9C%AF%E5%BF%83%E5%BE%97/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E6%88%90%E9%95%BF%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E6%90%9E%E7%AC%91/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/Hexo/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E7%BC%96%E7%A8%8B/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E4%B8%96%E7%95%8C%E6%9C%AB%E6%97%A5/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/Markdown/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E9%9A%8F%E7%AC%94/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E9%9B%A8%E5%A4%9C/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E5%BF%83%E6%83%85/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E5%BB%BA%E7%AB%99%E6%97%A5%E8%AE%B0/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E6%B7%B1%E5%A4%9C%E9%9A%8F%E8%AE%B0/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E7%B2%A4%E8%AF%AD%E7%94%B5%E5%8F%B0/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E6%83%85%E6%84%9F/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E5%88%9D%E7%A7%8B/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E5%9B%9E%E5%BF%86/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/Gareth-T/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E6%B1%A4%E4%BB%A4%E5%B1%B1/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E7%B2%A4%E8%AF%AD%E6%AD%8C/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E5%AD%A4%E7%8B%AC/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E6%B2%BB%E6%84%88/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E7%BE%8E%E9%A3%9F/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E7%94%9F%E6%B4%BB%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/tags/%E6%B2%BB%E6%84%88%E7%B3%BB/</loc>
+    <lastmod>2025-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -180,8 +368,50 @@
 
   
   <url>
-    <loc>https://www.fomal.cc/categories/%E6%BC%94%E7%A4%BA/</loc>
-    <lastmod>2025-10-30</lastmod>
+    <loc>https://hexo.sijiu.top/categories/%E5%BB%BA%E7%AB%99%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/categories/%E6%8A%80%E6%9C%AF%E9%9A%8F%E7%AC%94/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/categories/%E7%94%9F%E6%B4%BB%E6%9C%AD%E8%AE%B0/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/categories/%E7%A2%8E%E7%A2%8E%E5%BF%B5/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/categories/%E5%A3%B0%E9%9F%B3%E6%97%A5%E8%AE%B0/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/categories/%E9%9F%B3%E4%B9%90%E7%9E%AC%E9%97%B4/</loc>
+    <lastmod>2025-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hexo.sijiu.top/categories/%E5%90%83%E8%B4%A7%E6%97%A5%E5%B8%B8/</loc>
+    <lastmod>2025-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

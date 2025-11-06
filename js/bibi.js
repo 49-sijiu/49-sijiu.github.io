@@ -1,70 +1,285 @@
-let svg = '<svg  viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="is-badge"><path  d="m512 268c0 17.9-4.3 34.5-12.9 49.7s-20.1 27.1-34.6 35.4c.4 2.7.6 6.9.6 12.6 0 27.1-9.1 50.1-27.1 69.1-18.1 19.1-39.9 28.6-65.4 28.6-11.4 0-22.3-2.1-32.6-6.3-8 16.4-19.5 29.6-34.6 39.7-15 10.2-31.5 15.2-49.4 15.2-18.3 0-34.9-4.9-49.7-14.9-14.9-9.9-26.3-23.2-34.3-40-10.3 4.2-21.1 6.3-32.6 6.3-25.5 0-47.4-9.5-65.7-28.6-18.3-19-27.4-42.1-27.4-69.1 0-3 .4-7.2 1.1-12.6-14.5-8.4-26-20.2-34.6-35.4-8.5-15.2-12.8-31.8-12.8-49.7 0-19 4.8-36.5 14.3-52.3s22.3-27.5 38.3-35.1c-4.2-11.4-6.3-22.9-6.3-34.3 0-27 9.1-50.1 27.4-69.1s40.2-28.6 65.7-28.6c11.4 0 22.3 2.1 32.6 6.3 8-16.4 19.5-29.6 34.6-39.7 15-10.1 31.5-15.2 49.4-15.2s34.4 5.1 49.4 15.1c15 10.1 26.6 23.3 34.6 39.7 10.3-4.2 21.1-6.3 32.6-6.3 25.5 0 47.3 9.5 65.4 28.6s27.1 42.1 27.1 69.1c0 12.6-1.9 24-5.7 34.3 16 7.6 28.8 19.3 38.3 35.1 9.5 15.9 14.3 33.4 14.3 52.4zm-266.9 77.1 105.7-158.3c2.7-4.2 3.5-8.8 2.6-13.7-1-4.9-3.5-8.8-7.7-11.4-4.2-2.7-8.8-3.6-13.7-2.9-5 .8-9 3.2-12 7.4l-93.1 140-42.9-42.8c-3.8-3.8-8.2-5.6-13.1-5.4-5 .2-9.3 2-13.1 5.4-3.4 3.4-5.1 7.7-5.1 12.9 0 5.1 1.7 9.4 5.1 12.9l58.9 58.9 2.9 2.3c3.4 2.3 6.9 3.4 10.3 3.4 6.7-.1 11.8-2.9 15.2-8.7z" fill="#1da1f2"></path></svg>'
-let total = 0
-let nowNum = 0
-let items = []
-let page = 1
-let Url = 'https://kkapi.fomal.cc/api/ispeak?author=6319fedef46fae97dcfa5ee2&page=' // 记住替换为你的API链接
-
-
-window.addEventListener('DOMContentLoaded', () => {
-    getNew();
+//bbtalkLunboer v2.0 By Ariasaka
+AV.init({
+    appId: "5Qz83rfo5g2jJHlKCSdb61QB-gzGzoHsz",
+    appKey: "izOzmhweLBq2dHjcTCbZyMyk",
+    serverURL: "https://5qz83rfo.lc-cn-n1-shared.com"
 });
 
-// 获取数据
-function getNew() {
-    let bibi = document.getElementById('bibi');
-    try {
-        bibi.removeChild(document.getElementById('more'))
-    } catch (error) { }
-
-    bibi.innerHTML += '<div id="bb_loading"><img src="/assets/loading3.gif" alt="bb_loading"></div>' // bb_loading图片可以f12在我网站源码下载，也可以使用其他图片。
-
-    fetch(Url + page).then(res => res.json()).then((res) => {
-        total = res.data.total
-        items = res.data.items
-        nowNum += items.length
-        if (page == 1) {
-            document.querySelector('.bb-info').innerHTML = '<svg style="width:1.20em;height:1.20em;top:5px;fill:currentColor;overflow:hidden;position:relative"><use xlink:href="#icon-chat"></svg> 站长的唠叨(' + total + ')'
-        }
-        page += 1
-    }).then(() => {
-        bb();
-        if (nowNum < total) {
-            document.getElementById('bibi').innerHTML += '<button id="more" onclick="getNew()">再翻翻</button>'
-        }
-        document.getElementById('bibi').removeChild(document.getElementById('bb_loading'))
-    })
-}
-
-// 渲染数据
-function bb() {
-    let bb = document.getElementById('bb-main')
-    items.forEach((item) => {
-        let time = item.createdAt.substring(0, 10);
-        let div = document.createElement('div')
-        item.content = contentFormat(item.content)
-
-        div.className = 'bb-card'
-        div.innerHTML = '<div class="card-header"><div class="avatar"><img class="nofancybox"src="' + item.author.avatar + '"></div><div class="name">' + item.author.nickName + '</div>' + svg + '<div class="card-time">' + time + '</div></div><div class="card-content">' + item.content + '</div><div class="card-footer"><div data-v-185689ea=""class="card-label"style="background: ' + item.tag.bgColor + '; color: white;">' + item.tag.name + '</div></div>'
-        bb.appendChild(div)
-    })
-}
-
-// content格式化
-function contentFormat(s) {
-    let br = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-    let re_forimg = /<img(.*?)src=[\"|\']?(.*?)[\"|\']?(.*?)>|!\[(.*?)\]\((.*?)\)/g;
-    let getImgUrl = /(http(.*).[jpg|png|gif])/g;
-    let ls = s.match(getImgUrl)
-    s = s.replace(re_forimg, '')
-    s = s.replace(br, '')
-
-    let html = '<br>'
-    if (ls) {
-        ls.forEach((e) => {
-            html += '<a href="' + e + '" target="_blank" data-fancybox="group" class="fancybox"><img src="' + e + '"></a>'
-        })
+function lunbo(){
+    var speaks=[];
+    const query = new AV.Query('content');
+    
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
     }
-    s += html
-    return s
+    
+    query.find().then((talks) => {
+        dat = new Date();
+        
+        // ✅ 修复：修改循环条件，从 talks.length-1 开始
+        for(let i = talks.length - 1; i >= Math.max(0, talks.length - 32); i--){
+            // ✅ 添加安全检查
+            if (!talks[i] || !talks[i]["createdAt"]) continue;
+            
+            var usedTime = Date.parse(dat) - Date.parse(talks[i]["createdAt"]);
+            var days = Math.floor(usedTime / (24 * 3600 * 1000));
+            var leave1 = usedTime % (24 * 3600 * 1000);  
+            var hours = Math.floor(leave1 / (3600 * 1000));
+            var leave2 = leave1 % (3600 * 1000);   
+            var minutes = Math.floor(leave2 / (60 * 1000));
+            
+            // ✅ 添加更多安全检查
+            var bbcontent = talks[i]["attributes"] && talks[i]["attributes"]["content"] 
+                ? talks[i]["attributes"]["content"]
+                    .replace(/<[^>]+>/g, "")
+                    .replace(/<[^>]+>/g, "")
+                    .replace(/(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+\.(png|jpg|jpeg|webp)/g,"[图片]")
+                    .replace(/(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+/g,"[链接]")
+                : "[内容为空]";
+            
+            if(days > 31){
+                speaks.push(String(talks[i]["createdAt"].Format("yyyy-MM-dd")) + "：" + bbcontent)
+            }
+            else if(days > 0){
+                speaks.push(String(days) + " 天前：" + bbcontent);
+            }
+            else if(hours > 0){
+                speaks.push(String(hours) + " 小时前：" + bbcontent);
+            }
+            else{
+                speaks.push(String(minutes) + " 分钟前：" + bbcontent);
+            }
+        }
+        
+        document.querySelector(".shuoshuo").innerHTML = "";
+        for(let i = 0; i < speaks.length; i++){
+            var ch = document.createElement("div");
+            ch.className = "swiper-slide bbtalks";
+            ch.innerHTML = speaks[i];
+            document.querySelector(".shuoshuo").appendChild(ch);
+        }
+        
+        var fxxkccf = new Swiper("#speaks-content", {
+            loop: true,
+            direction: "vertical",
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            mousewheel: true,
+        });
+        
+        fxxkccf.el.onmouseover = function(){
+            fxxkccf.autoplay.stop();
+        }
+        fxxkccf.el.onmouseout = function(){
+            fxxkccf.autoplay.start();
+        }
+    }).catch(error => {
+        console.error('获取数据失败:', error);
+    });
 }
+
+document.addEventListener('pjax:complete', (e) => {
+    lunbo();
+});
+
+document.addEventListener('DOMContentLoaded', (e) => {
+    lunbo();
+});
+
+// 使用已有的 LeanCloud 配置
+// 确保 bbtalkLunboer.js 已经初始化了 AV
+
+// 为唠叨页面获取数据的函数
+function getBibiDataForPage() {
+    return new Promise((resolve, reject) => {
+        const query = new AV.Query('content');
+        query.descending('createdAt'); // 按时间倒序排列
+        query.limit(100); // 获取更多数据
+        
+        query.find().then((talks) => {
+            if (!talks || talks.length === 0) {
+                resolve([]);
+                return;
+            }
+            
+            const processedData = talks.map((talk, index) => {
+                if (!talk || !talk.attributes) return null;
+                
+                // 使用相同的内容处理逻辑
+                const bbcontent = talk["attributes"] && talk["attributes"]["content"] 
+                    ? talk["attributes"]["content"]
+                        .replace(/<[^>]+>/g, "")
+                        .replace(/<[^>]+>/g, "")
+                        .replace(/(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+\.(png|jpg|jpeg|webp)/g,"🖼️")
+                        .replace(/(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\*\+,;=.]+/g,"🔗")
+                    : "📝";
+                
+                // 格式化日期
+                const fullTime = new Date(talk.createdAt);
+                const timeText = fullTime.toLocaleDateString();
+                
+                return {
+                    content: bbcontent,
+                    timeText: timeText,
+                    fullTime: fullTime.toLocaleString(),
+                    index: index + 1,
+                    total: talks.length
+                };
+            }).filter(item => item !== null); // 过滤掉空数据
+            
+            resolve(processedData);
+        }).catch(error => {
+            console.error('获取唠叨数据失败:', error);
+            reject(error);
+        });
+    });
+}
+
+// 简单的瀑布流布局
+function waterfallLayout(container, items, columns = 3, gap = 15) {
+    const containerWidth = container.offsetWidth;
+    const columnWidth = (containerWidth - (columns - 1) * gap) / columns;
+    const columnHeights = new Array(columns).fill(0);
+    
+    items.forEach((item, index) => {
+        const columnIndex = index % columns;
+        const left = columnIndex * (columnWidth + gap);
+        const top = columnHeights[columnIndex];
+        
+        item.style.width = columnWidth + 'px';
+        item.style.left = left + 'px';
+        item.style.top = top + 'px';
+        
+        // 更新列高度
+        columnHeights[columnIndex] += item.offsetHeight + gap;
+    });
+    
+    // 设置容器高度
+    container.style.height = Math.max(...columnHeights) + 'px';
+}
+
+// 渲染唠叨卡片
+function renderBibiCards(data) {
+    const bbMain = document.getElementById('bb-main');
+    const bbInfo = document.querySelector('.bb-info');
+    
+    if (!data || data.length === 0) {
+        bbMain.innerHTML = `
+            <div id="bb-empty">
+                <div style="font-size: 48px; margin-bottom: 16px;">💬</div>
+                <div>暂无唠叨内容</div>
+                <div style="font-size: 14px; opacity: 0.7; margin-top: 8px;">快来发布第一条唠叨吧～</div>
+            </div>
+        `;
+        bbInfo.textContent = '💭 我的唠叨 (0)';
+        return;
+    }
+    
+    bbMain.innerHTML = ''; // 清空加载状态
+    bbInfo.textContent = `💭 我的唠叨 (${data.length})`;
+    
+    const items = [];
+    
+    data.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'bb-item card-widget';
+        
+        card.innerHTML = `
+            <div class="bb-content">${item.content}</div>
+            <div class="bb-bottombar">
+                <span class="bb-time">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--fa6-solid" width="1em" height="1em" viewBox="0 0 512 512">
+                        <path fill="currentColor" d="M256 0a256 256 0 1 1 0 512a256 256 0 1 1 0-512m-24 120v136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24"></path>
+                    </svg>
+                    <span class="bb-time-text">${item.timeText}</span>
+                </span>
+                <button class="bb-comment-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--fa6-solid" width="1em" height="1em" viewBox="0 0 512 512">
+                        <path fill="currentColor" d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9s-1.1-12.8 3.4-17.4l.3-.3c.3-.3.7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208"></path>
+                    </svg>
+                </button>
+            </div>
+        `;
+        
+        bbMain.appendChild(card);
+        items.push(card);
+    });
+    
+    // 应用瀑布流布局
+    setTimeout(() => {
+        waterfallLayout(bbMain, items);
+    }, 100);
+}
+
+// 窗口调整时重新布局
+function handleResize() {
+    const bbMain = document.getElementById('bb-main');
+    
+    // ✅ 修复：添加空值检查
+    if (!bbMain) {
+        console.log('🔧 bb-main元素不存在，跳过调整大小');
+        return;
+    }
+    const items = Array.from(bbMain.querySelectorAll('.bb-item'));
+    if (items.length > 0) {
+        waterfallLayout(bbMain, items);
+    }
+}
+
+// 显示加载状态
+function showLoading() {
+    const bbMain = document.getElementById('bb-main');
+    bbMain.innerHTML = `
+        <div id="bb-loading">
+            <div style="font-size: 48px; margin-bottom: 16px;">⏳</div>
+            <div>正在加载唠叨...</div>
+        </div>
+    `;
+}
+
+// 显示错误状态
+function showError() {
+    const bbMain = document.getElementById('bb-main');
+    bbMain.innerHTML = `
+        <div id="bb-error">
+            <div style="font-size: 48px; margin-bottom: 16px;">❌</div>
+            <div>加载失败</div>
+            <div style="font-size: 14px; opacity: 0.7; margin-top: 8px;">请刷新页面重试</div>
+        </div>
+    `;
+}
+
+// 初始化唠叨页面
+function initBibiPage() {
+    // 如果不在唠叨页面，则不执行
+    if (!document.getElementById('bibi')) return;
+    
+    // 显示加载状态
+    showLoading();
+    
+    getBibiDataForPage()
+        .then(renderBibiCards)
+        .catch(error => {
+            console.error('初始化唠叨页面失败:', error);
+            showError();
+        });
+}
+
+// 页面加载时初始化
+document.addEventListener('DOMContentLoaded', initBibiPage);
+document.addEventListener('pjax:complete', initBibiPage);
+window.addEventListener('resize', handleResize);

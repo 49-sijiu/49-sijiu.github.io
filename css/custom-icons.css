@@ -1,0 +1,95 @@
+/* === 自定义图标库 - 优化完整版 === */
+
+/* 基础图标样式 */
+.s-icon {
+  display: inline-block !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  vertical-align: middle !important;
+  transition: transform 0.3s ease !important;  
+}
+
+/* PNG 图标定义 */
+.s-icon-home { background-image: url('/images/icons/主页.png') !important; }
+.s-icon-article { background-image: url('/images/icons/文章.png') !important; }
+.s-icon-archive { background-image: url('/images/icons/归档.png') !important; }
+.s-icon-tag { background-image: url('/images/icons/标签.png') !important; }
+.s-icon-category { background-image: url('/images/icons/分类.png') !important; }
+.s-icon-social { background-image: url('/images/icons/社交.png') !important; }
+.s-icon-message-board { background-image: url('/images/icons/留言板.png') !important; }
+.s-icon-website { background-image: url('/images/icons/网站.png') !important; }
+.s-icon-about { background-image: url('/images/icons/关于.png') !important; }
+.s-icon-cat-food { background-image: url('/images/icons/猫粮.png') !important; }
+.s-icon-announcement { background-image: url('/images/icons/公告.png') !important; }
+.s-icon-smoothie { background-image: url('/images/icons/smoothie.png') !important; }
+.s-icon.s-icon-search { background-image: url('/images/icons/搜索.png') !important; }
+.s-icon-smoothie { background-image: url('/images/icons/smoothie.png') !important; }
+.s-icon.s-icon-search { background-image: url('/images/icons/搜索.png') !important; }
+.s-icon-fcircle { background-image: url('/images/icons/朋友圈.png') !important; }
+.s-icon-about { background-image: url('/images/icons/关于.png') !important; }
+.s-icon-link { background-image: url('/images/icons/友人帐.png') !important; }
+.s-icon-echarts { background-image: url('/images/icons/文章统计.png') !important; }
+.s-icon-census { background-image: url('/images/icons/网站统计.png') !important; }
+.s-icon-bb { background-image: url('/images/icons/bb.png') !important; }
+.s-icon-time { background-image: url('/images/icons/旧时光.png') !important; }
+
+/* SVG 图标定义 */
+.s-icon-ragdoll { background-image: url('/images/icons/布偶猫.svg') !important; }
+.s-icon-tuzi { background-image: url('/images/icons/兔子.svg') !important; }
+.s-icon-building-101 { background-image: url('/images/icons/101大楼.svg') !important; }
+.s-icon-eiffel-tower { background-image: url('/images/icons/埃菲尔铁塔.svg') !important; }
+.s-icon-pyramid { background-image: url('/images/icons/埃及金字塔.svg') !important; }
+.s-icon-leaning-tower { background-image: url('/images/icons/比萨斜塔.svg') !important; }
+.s-icon-ragdoll-wall { background-image: url('/images/icons/布偶墙.svg') !important; }
+.s-icon-big-ben { background-image: url('/images/icons/大本钟.svg') !important; }
+.s-icon-burj-al-arab { background-image: url('/images/icons/迪拜帆船酒店.svg') !important; }
+.s-icon-oriental-pearl-tower { background-image: url('/images/icons/东方明珠.svg') !important; }
+.s-icon-red-square { background-image: url('/images/icons/俄罗斯红场.svg') !important; }
+.s-icon-mount-fuji { background-image: url('/images/icons/富士山.svg') !important; }
+.s-icon-canton-tower { background-image: url('/images/icons/广州塔.svg') !important; }
+.s-icon-windmill { background-image: url('/images/icons/荷兰风车.svg') !important; }
+.s-icon-arc-de-triomphe { background-image: url('/images/icons/凯旋门.svg') !important; }
+.s-icon-christ-the-redeemer { background-image: url('/images/icons/里约热内卢基智像.svg') !important; }
+.s-icon-london-bridge { background-image: url('/images/icons/伦敦桥.svg') !important; }
+.s-icon-london-eye { background-image: url('/images/icons/伦敦眼.svg') !important; }
+.s-icon-colosseum { background-image: url('/images/icons/罗马角斗场.svg') !important; }
+.s-icon-shanghai-world-financial-center { background-image: url('/images/icons/上海环球金融中心.svg') !important; }
+.s-icon-taj-mahal { background-image: url('/images/icons/泰姬陵.svg') !important; }
+.s-icon-temple-of-heaven { background-image: url('/images/icons/天坛.svg') !important; }
+.s-icon-sydney-opera-house { background-image: url('/images/icons/悉尼歌剧院.svg') !important; }
+.s-icon-great-wall { background-image: url('/images/icons/长城.svg') !important; }
+.s-icon-cctv-headquarters { background-image: url('/images/icons/中央电视台总部大楼.svg') !important; }
+.s-icon-statue-of-liberty { background-image: url('/images/icons/自由女神像.svg') !important; }
+
+/* 尺寸变体 */
+.s-icon-sm { width: 16px !important; height: 16px !important; }
+.s-icon-lg { width: 24px !important; height: 24px !important; }
+.s-icon-xl { width: 32px !important; height: 32px !important; }
+
+/* 自定义动画效果 */
+@keyframes s-faa-tada {
+  0% { transform: scale(1); }
+  10%, 20% { transform: scale(0.9) rotate(-3deg); }
+  30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+  40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* 暗色模式适配 */
+[data-theme="dark"] .s-icon { filter: brightness(0.9) !important; }
+
+/* 只在悬停时持续动画 */
+.menus_item:not(:has(ul)):hover > a .s-icon,
+.menus_item > a.site-page.group:hover .s-icon,
+.menus_item_child li:hover > a .s-icon,
+#search-button:hover .s-icon {
+  animation: s-faa-tada 1.5s ease infinite !important;  /* 悬停时无限循环 */
+}
+
+/* 非悬停状态确保没有动画 */
+.s-icon {
+  animation: none !important;  /* 默认状态无动画 */
+}
