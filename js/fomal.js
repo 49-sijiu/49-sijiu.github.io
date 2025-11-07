@@ -34,61 +34,28 @@ function percent() {
 
 //----------------------------------------------------------------
 
-/* 导航栏显示标题 start */
-
-document.addEventListener('pjax:complete', tonav);
-document.addEventListener('DOMContentLoaded', tonav);
-//响应pjax
-function tonav() {
-  document.getElementById("name-container").setAttribute("style", "display:none");
-  var position = $(window).scrollTop();
-  $(window).scroll(function () {
-    var scroll = $(window).scrollTop();
-    if (scroll > position) {
-      document.getElementById("name-container").setAttribute("style", "");
-      document.getElementsByClassName("menus_items")[1].setAttribute("style", "display:none!important");
-    } else {
-      document.getElementsByClassName("menus_items")[1].setAttribute("style", "");
-      document.getElementById("name-container").setAttribute("style", "display:none");
-    }
-    position = scroll;
-  });
-  //修复没有弄右键菜单的童鞋无法回顶部的问题
-  document.getElementById("page-name").innerText = document.title.split(" | Fomalhaut🥝")[0];
-}
-
-function scrollToTop() {
-  document.getElementsByClassName("menus_items")[1].setAttribute("style", "");
-  document.getElementById("name-container").setAttribute("style", "display:none");
-  btf.scrollToDest(0, 500);
-}
-
-/* 导航栏显示标题 end */
-
 //----------------------------------------------------------------
 
-/* 欢迎信息 start - 使用 IPGeolocation API (带缓存功能) */
+/* 欢迎信息 start - 使用 nsmao.net IP查询API (带缓存功能) */
 let ipLoacation = {}; // 存储IP位置信息
 
 // 缓存配置
 const CACHE_CONFIG = {
   KEY: 'ip_geolocation_cache',
-  EXPIRY: 30 * 60 * 1000, // 30分钟缓存（单位：毫秒）
-  ENABLED: true // 是否启用缓存
+  EXPIRY: 30 * 60 * 1000, // 30分钟缓存
+  ENABLED: true
 };
 
-// 您的坐标（已修改为 30.81050, 103.88720）
+// 您的坐标
 const MY_COORDINATES = {
-  lng: 103.88720, // 经度
-  lat: 30.81050   // 纬度
+  lng: 103.88720,
+  lat: 30.81050
 };
 
 // 缓存管理函数
 const cacheManager = {
-  // 保存到缓存
   set: function(data) {
     if (!CACHE_CONFIG.ENABLED) return;
-    
     try {
       const cacheData = {
         data: data,
@@ -98,26 +65,21 @@ const cacheManager = {
       localStorage.setItem(CACHE_CONFIG.KEY, JSON.stringify(cacheData));
       console.log('IP位置信息已缓存');
     } catch (error) {
-      console.warn('缓存保存失败，可能是localStorage不可用:', error);
+      console.warn('缓存保存失败:', error);
     }
   },
   
-  // 从缓存读取
   get: function() {
     if (!CACHE_CONFIG.ENABLED) return null;
-    
     try {
       const cached = localStorage.getItem(CACHE_CONFIG.KEY);
       if (!cached) return null;
-      
       const cacheData = JSON.parse(cached);
       const isExpired = Date.now() - cacheData.timestamp > cacheData.expiry;
-      
       if (isExpired) {
-        this.clear(); // 清除过期缓存
+        this.clear();
         return null;
       }
-      
       console.log('从缓存中读取IP位置信息');
       return cacheData.data;
     } catch (error) {
@@ -126,7 +88,6 @@ const cacheManager = {
     }
   },
   
-  // 清除缓存
   clear: function() {
     try {
       localStorage.removeItem(CACHE_CONFIG.KEY);
@@ -134,108 +95,87 @@ const cacheManager = {
     } catch (error) {
       console.warn('缓存清除失败:', error);
     }
-  },
-  
-  // 获取缓存信息
-  getInfo: function() {
-    try {
-      const cached = localStorage.getItem(CACHE_CONFIG.KEY);
-      if (!cached) return { exists: false };
-      
-      const cacheData = JSON.parse(cached);
-      const age = Date.now() - cacheData.timestamp;
-      const isExpired = age > cacheData.expiry;
-      
-      return {
-        exists: true,
-        isExpired: isExpired,
-        age: Math.round(age / 1000 / 60), // 分钟
-        maxAge: Math.round(cacheData.expiry / 1000 / 60) // 分钟
-      };
-    } catch (error) {
-      return { exists: false, error: error.message };
-    }
   }
 };
 
-// 使用 IPGeolocation API 获取IP和位置信息
-async function fetchIPGeolocation(forceRefresh = false) {
-  // 检查缓存（除非强制刷新）
-  if (!forceRefresh) {
-    const cachedData = cacheManager.get();
-    if (cachedData) {
-      ipLoacation = cachedData;
-      return ipLoacation;
-    }
-  }
-  
-  const apiKey = '7f1b40a0ea664233807f027e64dd1cf1'; // 请替换为您的实际API Key
-  const apiUrl = `https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}`;
-  
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error(`API响应错误: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    
-    // 适配到您原有的数据结构
-    ipLoacation = {
-      result: {
-        ip: data.ip,
-        location: {
-          lng: parseFloat(data.longitude) || 0,
-          lat: parseFloat(data.latitude) || 0
-        },
-        ad_info: {
-          nation: data.country_name || "未知国家",
-          province: data.state_prov || "",
-          city: data.city || "",
-          district: data.district || ""
-        },
-        // 额外信息（IPGeolocation提供更多数据）
-        extra: {
-          country_code: data.country_code2,
-          isp: data.isp,
-          timezone: data.timezone?.name,
-          currency: data.currency?.name,
-          organization: data.organization
-        }
-      },
-      // 添加元数据
-      _meta: {
-        source: 'ipgeolocation',
-        cached: false,
-        timestamp: Date.now()
+// 使用 nsmao.net API 获取IP和位置信息
+function fetchIPGeolocation(forceRefresh = false) {
+  return new Promise((resolve) => {
+    // 检查缓存（除非强制刷新）
+    if (!forceRefresh) {
+      const cachedData = cacheManager.get();
+      if (cachedData) {
+        ipLoacation = cachedData;
+        resolve(ipLoacation);
+        return;
       }
-    };
-    
-    console.log('IP地理位置信息获取成功:', ipLoacation);
-    
-    // 保存到缓存
-    cacheManager.set(ipLoacation);
-    
-    return ipLoacation;
-  } catch (error) {
-    console.error('获取IP地理位置失败:', error);
-    
-    // 尝试使用缓存（即使过期）
-    const cachedData = cacheManager.get();
-    if (cachedData) {
-      console.log('API请求失败，使用过期的缓存数据');
-      ipLoacation = cachedData;
-      ipLoacation._meta = {
-        source: 'cache_expired',
-        cached: true,
-        timestamp: Date.now()
-      };
-      return ipLoacation;
     }
     
-    // 使用默认位置信息
-    return setDefaultLocation();
-  }
+    // 使用 nsmao.net API
+    $.ajax({
+      url: 'https://api.nsmao.net/api/ipip/query',
+      data: {
+        key: 'HQWiSAht2dHWQlbItCcVVCBVJG'
+      },
+      type: 'GET',
+      dataType: 'json',
+      timeout: 3000,
+      success: function(response) {
+        console.log('IP查询API返回数据:', response);
+        
+        // 根据实际的API返回数据结构进行适配
+        if (response && response.code === 200) {
+          ipLoacation = {
+            result: {
+              ip: response.ip || response.data.ip || "未知IP",
+              location: {
+                lng: parseFloat(response.data.lng) || 0,
+                lat: parseFloat(response.data.lat) || 0
+              },
+              ad_info: {
+                nation: response.data.country || "中国",
+                province: response.data.province || "",
+                city: response.data.city || "",
+                district: "",
+                isp: response.data.isp || ""
+              }
+            },
+            _meta: {
+              source: 'nsmao',
+              cached: false,
+              timestamp: Date.now()
+            }
+          };
+        } else {
+          throw new Error(response?.msg || 'API返回数据异常');
+        }
+        
+        console.log('IP地理位置信息获取成功:', ipLoacation);
+        cacheManager.set(ipLoacation);
+        resolve(ipLoacation);
+      },
+      error: function(xhr, status, error) {
+        console.error('获取IP地理位置失败:', error);
+        
+        // 尝试使用缓存（即使过期）
+        const cachedData = cacheManager.get();
+        if (cachedData) {
+          console.log('API请求失败，使用过期的缓存数据');
+          ipLoacation = cachedData;
+          ipLoacation._meta = {
+            source: 'cache_expired',
+            cached: true,
+            timestamp: Date.now()
+          };
+          resolve(ipLoacation);
+          return;
+        }
+        
+        // 使用默认位置信息
+        resolve(setDefaultLocation());
+      }
+    });
+  });
 }
 
 // 设置默认位置信息
@@ -244,14 +184,15 @@ function setDefaultLocation() {
     result: {
       ip: "未知IP",
       location: {
-        lng: 0,
-        lat: 0
+        lng: MY_COORDINATES.lng,
+        lat: MY_COORDINATES.lat
       },
       ad_info: {
         nation: "中国",
-        province: "",
-        city: "",
-        district: ""
+        province: "四川",
+        city: "成都",
+        district: "",
+        isp: ""
       }
     },
     _meta: {
@@ -263,12 +204,11 @@ function setDefaultLocation() {
   return ipLoacation;
 }
 
-// 计算距离函数（使用您的新坐标）
+// 计算距离函数
 function getDistance(visitorLng, visitorLat) {
-  const R = 6371; // 地球半径（公里）
-  const { sin, cos, asin, PI, hypot, sqrt, pow } = Math;
+  const R = 6371;
+  const { sin, cos, asin, PI, sqrt } = Math;
   
-  // 将角度转换为弧度
   const toRadians = (degree) => degree * PI / 180;
   
   const lat1 = toRadians(MY_COORDINATES.lat);
@@ -276,7 +216,6 @@ function getDistance(visitorLng, visitorLat) {
   const lat2 = toRadians(visitorLat);
   const lon2 = toRadians(visitorLng);
   
-  // Haversine公式计算距离
   const dlat = lat2 - lat1;
   const dlon = lon2 - lon1;
   
@@ -287,7 +226,7 @@ function getDistance(visitorLng, visitorLat) {
   const c = 2 * asin(sqrt(a));
   const distance = R * c;
   
-  return Math.round(distance * 100) / 100; // 保留两位小数
+  return Math.round(distance * 100) / 100;
 }
 
 // 生成位置描述
@@ -296,7 +235,8 @@ function generatePosDesc(dist, locationData) {
   
   const nation = locationData.ad_info.nation;
   const city = locationData.ad_info.city;
-  const isp = locationData.extra?.isp;
+  const province = locationData.ad_info.province;
+  const isp = locationData.ad_info.isp;
   
   let desc = "";
   
@@ -307,7 +247,7 @@ function generatePosDesc(dist, locationData) {
   } else if (dist < 10) {
     desc = "我们离得很近哦！";
   } else if (dist < 50) {
-    desc = `欢迎${city ? city + '的' : ''}朋友！`;
+    desc = "欢迎附近的朋友！";    
   } else if (dist < 500) {
     desc = "欢迎来自省内的朋友！";
   } else if (nation === "中国") {
@@ -315,6 +255,7 @@ function generatePosDesc(dist, locationData) {
   } else {
     desc = "有朋自远方来，不亦乐乎！";
   }
+  
   
   return desc;
 }
@@ -324,25 +265,47 @@ async function showWelcome(forceRefresh = false) {
   let dist, pos, ip, posdesc, sourceInfo = '';
 
   try {
-    // 获取IP位置信息（可选择强制刷新）
+    // 获取IP位置信息
     await fetchIPGeolocation(forceRefresh);
+    
+    // 显示数据来源信息
+    if (ipLoacation._meta) {
+      const sources = {
+        'nsmao': 'IP查询API',
+        'cache': '缓存',
+        'cache_expired': '过期缓存',
+        'default': '默认数据'
+      };
+      sourceInfo = `（数据来源: ${sources[ipLoacation._meta.source] || ipLoacation._meta.source}）`;
+    }
 
     if (ipLoacation.result && ipLoacation.result.ad_info) {
       const loc = ipLoacation.result;
       
-      // 计算距离（使用您的新坐标）
+      // 计算距离
       if (loc.location.lat && loc.location.lng) {
         dist = getDistance(loc.location.lng, loc.location.lat);
       } else {
-        dist = "未知";
+        dist = 0;
       }
       
-      pos = loc.ad_info.nation;
-      if (loc.ad_info.province) {
-        pos += `-${loc.ad_info.province}`;
-      }
-      if (loc.ad_info.city) {
-        pos += `-${loc.ad_info.city}`;
+      // 国内位置显示优化：优先显示城市
+      const city = loc.ad_info.city;
+      const province = loc.ad_info.province;
+      
+      if (city && province) {
+        // 如果省市相同（如直辖市），只显示城市
+        if (province.replace(/省|市/g, '') === city.replace(/市/g, '')) {
+          pos = city;
+        } else {
+          pos = city; // 国内只显示城市
+        }
+      } else if (city) {
+        pos = city;
+      } else if (province) {
+        pos = province;
+      } else {
+        pos = "中国";
       }
       
       ip = loc.ip;
@@ -352,8 +315,8 @@ async function showWelcome(forceRefresh = false) {
     }
   } catch (error) {
     console.error("显示欢迎信息时出错:", error);
-    dist = 5.20;
-    pos = "中国";
+    dist = 0;
+    pos = "成都";
     ip = "未知IP";
     posdesc = "欢迎访问！";
   }
@@ -366,20 +329,20 @@ async function showWelcome(forceRefresh = false) {
   if (hour >= 5 && hour < 11) timeChange = "<span>上午好</span>，一日之计在于晨！";
   else if (hour >= 11 && hour < 13) timeChange = "<span>中午好</span>，该摸鱼吃午饭了。";
   else if (hour >= 13 && hour < 15) timeChange = "<span>下午好</span>，懒懒地睡个午觉吧！";
-  else if (hour >= 15 && hour < 16) timeChange = "<span>三点几啦</span>，一起饮茶呀！";
-  else if (hour >= 16 && hour < 19) timeChange = "<span>夕阳无限好！</span>";
+  else if (hour >= 15 && hour < 17) timeChange = "<span>下午好</span>，一起饮茶呀！";
+  else if (hour >= 17 && hour < 19) timeChange = "<span>傍晚好</span>，夕阳无限好！";
   else if (hour >= 19 && hour < 24) timeChange = "<span>晚上好</span>，夜生活嗨起来！";
   else timeChange = "夜深了，早点休息，少熬夜。";
 
   try {
     document.getElementById("welcome-info").innerHTML =
-      `<b><center>🎉 欢迎信息 🎉</center>&emsp;&emsp;欢迎来自 <span style="color:var(--theme-color)">${pos}</span> 的小伙伴，${timeChange}您现在距离站长约 <span style="color:var(--theme-color)">${dist}</span> 公里，当前的IP地址为： <span style="color:var(--theme-color)">${ip}</span>， ${posdesc} ${sourceInfo}</b>`;
+      `<b><center>🎉 欢迎信息 🎉</center>&emsp;&emsp;来自 <span style="color:var(--theme-color)">${pos}</span> 的小伙伴，${timeChange}您现在距离站长约 <span style="color:var(--theme-color)">${dist}</span> 公里，当前的IP地址为： <span style="color:var(--theme-color)">${ip}</span>， ${posdesc}</b>`;
   } catch (err) {
     console.log("无法获取#welcome-info元素");
   }
 }
 
-// 手动刷新位置信息（可用于调试）
+// 手动刷新位置信息
 function refreshLocation() {
   console.log('手动刷新位置信息...');
   showWelcome(true);
@@ -395,14 +358,17 @@ document.addEventListener('pjax:complete', function() {
   showWelcome();
 });
 
-// 调试功能：在控制台可以查看缓存状态
+// 调试功能
 window.getCacheInfo = function() {
-  const info = cacheManager.getInfo();
-  console.log('缓存状态:', info);
-  return info;
+  const cached = cacheManager.get();
+  return cached ? {
+    exists: true,
+    city: cached.result?.ad_info?.city,
+    country: cached.result?.ad_info?.nation,
+    ip: cached.result?.ip
+  } : { exists: false };
 };
 
-// 调试功能：清除缓存
 window.clearLocationCache = function() {
   cacheManager.clear();
   console.log('位置缓存已清除');
@@ -660,155 +626,6 @@ function randomPost() {
 
 //----------------------------------------------------------------
 
-/* 小猫咪 start */
-if (document.body.clientWidth > 992) {
-  function getBasicInfo() {
-    /* 窗口高度 */
-    var ViewH = $(window).height();
-    /* document高度 */
-    var DocH = $("body")[0].scrollHeight;
-    /* 滚动的高度 */
-    var ScrollTop = $(window).scrollTop();
-    /* 可滚动的高度 */
-    var S_V = DocH - ViewH;
-    var Band_H = ScrollTop / (DocH - ViewH) * 100;
-    return {
-      ViewH: ViewH,
-      DocH: DocH,
-      ScrollTop: ScrollTop,
-      Band_H: Band_H,
-      S_V: S_V
-    }
-  };
-  function show(basicInfo) {
-    if (basicInfo.ScrollTop > 0.001) {
-      $(".neko").css('display', 'block');
-    } else {
-      $(".neko").css('display', 'none');
-    }
-  }
-  (function ($) {
-    $.fn.nekoScroll = function (option) {
-      var defaultSetting = {
-        top: '0',
-        scroWidth: 6 + 'px',
-        z_index: 9999,
-        zoom: 0.9,
-        borderRadius: 5 + 'px',
-        right: 55.6 + 'px',
-        nekoImg: "https://bu.dusays.com/2022/07/20/62d812db74be9.png",
-        hoverMsg: "春天啦~",
-        color: "var(--theme-color)",
-        during: 500,
-        blog_body: "body",
-      };
-      var setting = $.extend(defaultSetting, option);
-      var getThis = this.prop("className") !== "" ? "." + this.prop("className") : this.prop("id") !== "" ? "#" +
-        this.prop("id") : this.prop("nodeName");
-      if ($(".neko").length == 0) {
-        this.after("<div class=\"neko\" id=" + setting.nekoname + " data-msg=\"" + setting.hoverMsg + "\"></div>");
-      }
-      let basicInfo = getBasicInfo();
-      $(getThis)
-        .css({
-          'position': 'fixed',
-          'width': setting.scroWidth,
-          'top': setting.top,
-          'height': basicInfo.Band_H * setting.zoom * basicInfo.ViewH * 0.01 + 'px',
-          'z-index': setting.z_index,
-          'background-color': setting.bgcolor,
-          "border-radius": setting.borderRadius,
-          'right': setting.right,
-          'background-image': 'url(' + setting.scImg + ')',
-          'background-image': '-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent)', 'border-radius': '2em',
-          'background-size': 'contain'
-        });
-      $("#" + setting.nekoname)
-        .css({
-          'position': 'fixed',
-          'top': basicInfo.Band_H * setting.zoom * basicInfo.ViewH * 0.01 - 50 + 'px',
-          'z-index': setting.z_index * 10,
-          'right': setting.right,
-          'background-image': 'url(' + setting.nekoImg + ')',
-        });
-      show(getBasicInfo());
-      $(window)
-        .scroll(function () {
-          let basicInfo = getBasicInfo();
-          show(basicInfo);
-          $(getThis)
-            .css({
-              'position': 'fixed',
-              'width': setting.scroWidth,
-              'top': setting.top,
-              'height': basicInfo.Band_H * setting.zoom * basicInfo.ViewH * 0.01 + 'px',
-              'z-index': setting.z_index,
-              'background-color': setting.bgcolor,
-              "border-radius": setting.borderRadius,
-              'right': setting.right,
-              'background-image': 'url(' + setting.scImg + ')',
-              'background-image': '-webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent)', 'border-radius': '2em',
-              'background-size': 'contain'
-            });
-          $("#" + setting.nekoname)
-            .css({
-              'position': 'fixed',
-              'top': basicInfo.Band_H * setting.zoom * basicInfo.ViewH * 0.01 - 50 + 'px',
-              'z-index': setting.z_index * 10,
-              'right': setting.right,
-              'background-image': 'url(' + setting.nekoImg + ')',
-            });
-          if (basicInfo.ScrollTop == basicInfo.S_V) {
-            $("#" + setting.nekoname)
-              .addClass("showMsg")
-          } else {
-            $("#" + setting.nekoname)
-              .removeClass("showMsg");
-            $("#" + setting.nekoname)
-              .attr("data-msg", setting.hoverMsg);
-          }
-        });
-      this.click(function (e) {
-        btf.scrollToDest(0, 500)
-      });
-      $("#" + setting.nekoname)
-        .click(function () {
-          btf.scrollToDest(0, 500)
-        });
-      return this;
-    }
-  })(jQuery);
-
-  $(document).ready(function () {
-    //部分自定义
-    $("#myscoll").nekoScroll({
-      bgcolor: 'rgb(0 0 0 / .5)', //背景颜色，没有绳子背景图片时有效
-      borderRadius: '2em',
-      zoom: 0.9
-    }
-    );
-    //自定义（去掉以下注释，并注释掉其他的查看效果）
-    /*
-    $("#myscoll").nekoScroll({
-        nekoname:'neko1', //nekoname，相当于id
-        nekoImg:'img/猫咪.png', //neko的背景图片
-        scImg:"img/绳1.png", //绳子的背景图片
-        bgcolor:'#1e90ff', //背景颜色，没有绳子背景图片时有效
-        zoom:0.9, //绳子长度的缩放值
-        hoverMsg:'你好~喵', //鼠标浮动到neko上方的对话框信息
-        right:'100px', //距离页面右边的距离
-        fontFamily:'楷体', //对话框字体
-        fontSize:'14px', //对话框字体的大小
-        color:'#1e90ff', //对话框字体颜色
-        scroWidth:'8px', //绳子的宽度
-        z_index:100, //不用解释了吧
-        during:1200, //从顶部到底部滑动的时长
-    });
-    */
-  })
-}
-
-/* 小猫咪 end */
 
 //----------------------------------------------------------------
 
