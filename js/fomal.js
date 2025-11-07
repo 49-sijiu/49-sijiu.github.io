@@ -67,71 +67,347 @@ function scrollToTop() {
 
 //----------------------------------------------------------------
 
-/* 欢迎信息 start */
-//get请求
-$.ajax({
-  type: 'get',
-  url: 'https://apis.map.qq.com/ws/location/v1/ip',
-  data: {
-    key: '',  // 这里要写你的KEY!!!
-    output: 'jsonp',
-  },
-  dataType: 'jsonp',
-  success: function (res) {
-    ipLoacation = res;
-  }
-})
-function getDistance(e1, n1, e2, n2) {
-  const R = 6371
-  const { sin, cos, asin, PI, hypot } = Math
-  let getPoint = (e, n) => {
-    e *= PI / 180
-    n *= PI / 180
-    return { x: cos(n) * cos(e), y: cos(n) * sin(e), z: sin(n) }
-  }
+/* 欢迎信息 start - 使用 IPGeolocation API (带缓存功能) */
+let ipLoacation = {}; // 存储IP位置信息
 
-  let a = getPoint(e1, n1)
-  let b = getPoint(e2, n2)
-  let c = hypot(a.x - b.x, a.y - b.y, a.z - b.z)
-  let r = asin(c / 2) * 2 * R
-  return Math.round(r);
+// 缓存配置
+const CACHE_CONFIG = {
+  KEY: 'ip_geolocation_cache',
+  EXPIRY: 30 * 60 * 1000, // 30分钟缓存（单位：毫秒）
+  ENABLED: true // 是否启用缓存
+};
+
+// 您的坐标（已修改为 30.81050, 103.88720）
+const MY_COORDINATES = {
+  lng: 103.88720, // 经度
+  lat: 30.81050   // 纬度
+};
+
+// 缓存管理函数
+const cacheManager = {
+  // 保存到缓存
+  set: function(data) {
+    if (!CACHE_CONFIG.ENABLED) return;
+    
+    try {
+      const cacheData = {
+        data: data,
+        timestamp: Date.now(),
+        expiry: CACHE_CONFIG.EXPIRY
+      };
+      localStorage.setItem(CACHE_CONFIG.KEY, JSON.stringify(cacheData));
+      console.log('IP位置信息已缓存');
+    } catch (error) {
+      console.warn('缓存保存失败，可能是localStorage不可用:', error);
+    }
+  },
+  
+  // 从缓存读取
+  get: function() {
+    if (!CACHE_CONFIG.ENABLED) return null;
+    
+    try {
+      const cached = localStorage.getItem(CACHE_CONFIG.KEY);
+      if (!cached) return null;
+      
+      const cacheData = JSON.parse(cached);
+      const isExpired = Date.now() - cacheData.timestamp > cacheData.expiry;
+      
+      if (isExpired) {
+        this.clear(); // 清除过期缓存
+        return null;
+      }
+      
+      console.log('从缓存中读取IP位置信息');
+      return cacheData.data;
+    } catch (error) {
+      console.warn('缓存读取失败:', error);
+      return null;
+    }
+  },
+  
+  // 清除缓存
+  clear: function() {
+    try {
+      localStorage.removeItem(CACHE_CONFIG.KEY);
+      console.log('缓存已清除');
+    } catch (error) {
+      console.warn('缓存清除失败:', error);
+    }
+  },
+  
+  // 获取缓存信息
+  getInfo: function() {
+    try {
+      const cached = localStorage.getItem(CACHE_CONFIG.KEY);
+      if (!cached) return { exists: false };
+      
+      const cacheData = JSON.parse(cached);
+      const age = Date.now() - cacheData.timestamp;
+      const isExpired = age > cacheData.expiry;
+      
+      return {
+        exists: true,
+        isExpired: isExpired,
+        age: Math.round(age / 1000 / 60), // 分钟
+        maxAge: Math.round(cacheData.expiry / 1000 / 60) // 分钟
+      };
+    } catch (error) {
+      return { exists: false, error: error.message };
+    }
+  }
+};
+
+// 使用 IPGeolocation API 获取IP和位置信息
+async function fetchIPGeolocation(forceRefresh = false) {
+  // 检查缓存（除非强制刷新）
+  if (!forceRefresh) {
+    const cachedData = cacheManager.get();
+    if (cachedData) {
+      ipLoacation = cachedData;
+      return ipLoacation;
+    }
+  }
+  
+  const apiKey = '7f1b40a0ea664233807f027e64dd1cf1'; // 请替换为您的实际API Key
+  const apiUrl = `https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}`;
+  
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`API响应错误: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    // 适配到您原有的数据结构
+    ipLoacation = {
+      result: {
+        ip: data.ip,
+        location: {
+          lng: parseFloat(data.longitude) || 0,
+          lat: parseFloat(data.latitude) || 0
+        },
+        ad_info: {
+          nation: data.country_name || "未知国家",
+          province: data.state_prov || "",
+          city: data.city || "",
+          district: data.district || ""
+        },
+        // 额外信息（IPGeolocation提供更多数据）
+        extra: {
+          country_code: data.country_code2,
+          isp: data.isp,
+          timezone: data.timezone?.name,
+          currency: data.currency?.name,
+          organization: data.organization
+        }
+      },
+      // 添加元数据
+      _meta: {
+        source: 'ipgeolocation',
+        cached: false,
+        timestamp: Date.now()
+      }
+    };
+    
+    console.log('IP地理位置信息获取成功:', ipLoacation);
+    
+    // 保存到缓存
+    cacheManager.set(ipLoacation);
+    
+    return ipLoacation;
+  } catch (error) {
+    console.error('获取IP地理位置失败:', error);
+    
+    // 尝试使用缓存（即使过期）
+    const cachedData = cacheManager.get();
+    if (cachedData) {
+      console.log('API请求失败，使用过期的缓存数据');
+      ipLoacation = cachedData;
+      ipLoacation._meta = {
+        source: 'cache_expired',
+        cached: true,
+        timestamp: Date.now()
+      };
+      return ipLoacation;
+    }
+    
+    // 使用默认位置信息
+    return setDefaultLocation();
+  }
 }
 
+// 设置默认位置信息
+function setDefaultLocation() {
+  ipLoacation = {
+    result: {
+      ip: "未知IP",
+      location: {
+        lng: 0,
+        lat: 0
+      },
+      ad_info: {
+        nation: "中国",
+        province: "",
+        city: "",
+        district: ""
+      }
+    },
+    _meta: {
+      source: 'default',
+      cached: false,
+      timestamp: Date.now()
+    }
+  };
+  return ipLoacation;
+}
 
-function showWelcome() {
-  // 禁用IP定位功能 - 设置默认值
-  let dist = 0;
-  let pos = "中国";
-  let ip = "未知IP"; 
-  let posdesc = "欢迎访问！";
+// 计算距离函数（使用您的新坐标）
+function getDistance(visitorLng, visitorLat) {
+  const R = 6371; // 地球半径（公里）
+  const { sin, cos, asin, PI, hypot, sqrt, pow } = Math;
+  
+  // 将角度转换为弧度
+  const toRadians = (degree) => degree * PI / 180;
+  
+  const lat1 = toRadians(MY_COORDINATES.lat);
+  const lon1 = toRadians(MY_COORDINATES.lng);
+  const lat2 = toRadians(visitorLat);
+  const lon2 = toRadians(visitorLng);
+  
+  // Haversine公式计算距离
+  const dlat = lat2 - lat1;
+  const dlon = lon2 - lon1;
+  
+  const a = sin(dlat/2) * sin(dlat/2) +
+            cos(lat1) * cos(lat2) *
+            sin(dlon/2) * sin(dlon/2);
+  
+  const c = 2 * asin(sqrt(a));
+  const distance = R * c;
+  
+  return Math.round(distance * 100) / 100; // 保留两位小数
+}
 
-  // let dist = getDistance(113.34499552, 23.15537143, ipLoacation.result.location.lng, ipLoacation.result.location.lat); //这里换成自己的经纬度
-  // let pos = ipLoacation.result.ad_info.nation;
-  // let ip;
-  // let posdesc;
+// 生成位置描述
+function generatePosDesc(dist, locationData) {
+  if (!locationData) return "欢迎访问！";
+  
+  const nation = locationData.ad_info.nation;
+  const city = locationData.ad_info.city;
+  const isp = locationData.extra?.isp;
+  
+  let desc = "";
+  
+  if (dist === 0) {
+    desc = "您就在我的位置！真是太巧了！";
+  } else if (dist < 1) {
+    desc = "您就在附近，真是太巧了！";
+  } else if (dist < 10) {
+    desc = "我们离得很近哦！";
+  } else if (dist < 50) {
+    desc = `欢迎${city ? city + '的' : ''}朋友！`;
+  } else if (dist < 500) {
+    desc = "欢迎来自省内的朋友！";
+  } else if (nation === "中国") {
+    desc = "欢迎来自远方的国内朋友！";
+  } else {
+    desc = "有朋自远方来，不亦乐乎！";
+  }
+  
+  return desc;
+}
 
-  //根据本地时间切换欢迎语
+// 显示欢迎信息
+async function showWelcome(forceRefresh = false) {
+  let dist, pos, ip, posdesc, sourceInfo = '';
+
+  try {
+    // 获取IP位置信息（可选择强制刷新）
+    await fetchIPGeolocation(forceRefresh);
+
+    if (ipLoacation.result && ipLoacation.result.ad_info) {
+      const loc = ipLoacation.result;
+      
+      // 计算距离（使用您的新坐标）
+      if (loc.location.lat && loc.location.lng) {
+        dist = getDistance(loc.location.lng, loc.location.lat);
+      } else {
+        dist = "未知";
+      }
+      
+      pos = loc.ad_info.nation;
+      if (loc.ad_info.province) {
+        pos += `-${loc.ad_info.province}`;
+      }
+      if (loc.ad_info.city) {
+        pos += `-${loc.ad_info.city}`;
+      }
+      
+      ip = loc.ip;
+      posdesc = generatePosDesc(dist, loc);
+    } else {
+      throw new Error("IP位置数据不完整");
+    }
+  } catch (error) {
+    console.error("显示欢迎信息时出错:", error);
+    dist = 5.20;
+    pos = "中国";
+    ip = "未知IP";
+    posdesc = "欢迎访问！";
+  }
+
+  // 根据本地时间切换欢迎语
   let timeChange;
   let date = new Date();
-  if (date.getHours() >= 5 && date.getHours() < 11) timeChange = "<span>上午好</span>，一日之计在于晨！";
-  else if (date.getHours() >= 11 && date.getHours() < 13) timeChange = "<span>中午好</span>，该摸鱼吃午饭了。";
-  else if (date.getHours() >= 13 && date.getHours() < 15) timeChange = "<span>下午好</span>，懒懒地睡个午觉吧！";
-  else if (date.getHours() >= 15 && date.getHours() < 16) timeChange = "<span>三点几啦</span>，一起饮茶呀！";
-  else if (date.getHours() >= 16 && date.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";
-  else if (date.getHours() >= 19 && date.getHours() < 24) timeChange = "<span>晚上好</span>，夜生活嗨起来！";
+  const hour = date.getHours();
+  
+  if (hour >= 5 && hour < 11) timeChange = "<span>上午好</span>，一日之计在于晨！";
+  else if (hour >= 11 && hour < 13) timeChange = "<span>中午好</span>，该摸鱼吃午饭了。";
+  else if (hour >= 13 && hour < 15) timeChange = "<span>下午好</span>，懒懒地睡个午觉吧！";
+  else if (hour >= 15 && hour < 16) timeChange = "<span>三点几啦</span>，一起饮茶呀！";
+  else if (hour >= 16 && hour < 19) timeChange = "<span>夕阳无限好！</span>";
+  else if (hour >= 19 && hour < 24) timeChange = "<span>晚上好</span>，夜生活嗨起来！";
   else timeChange = "夜深了，早点休息，少熬夜。";
 
   try {
-    //自定义文本和需要放的位置
     document.getElementById("welcome-info").innerHTML =
-      `<b><center>🎉 欢迎信息 🎉</center>&emsp;&emsp;欢迎来自 <span style="color:var(--theme-color)">${pos}</span> 的小伙伴，${timeChange}您现在距离站长约 <span style="color:var(--theme-color)">${dist}</span> 公里，当前的IP地址为： <span style="color:var(--theme-color)">${ip}</span>， ${posdesc}</b>`;
+      `<b><center>🎉 欢迎信息 🎉</center>&emsp;&emsp;欢迎来自 <span style="color:var(--theme-color)">${pos}</span> 的小伙伴，${timeChange}您现在距离站长约 <span style="color:var(--theme-color)">${dist}</span> 公里，当前的IP地址为： <span style="color:var(--theme-color)">${ip}</span>， ${posdesc} ${sourceInfo}</b>`;
   } catch (err) {
-    // console.log("Pjax无法获取#welcome-info元素🙄🙄🙄")
+    console.log("无法获取#welcome-info元素");
   }
 }
-window.onload = showWelcome;
-// 如果使用了pjax在加上下面这行代码
-document.addEventListener('pjax:complete', showWelcome);
+
+// 手动刷新位置信息（可用于调试）
+function refreshLocation() {
+  console.log('手动刷新位置信息...');
+  showWelcome(true);
+}
+
+// 页面加载时初始化
+document.addEventListener('DOMContentLoaded', function() {
+  showWelcome();
+});
+
+// 如果使用了pjax
+document.addEventListener('pjax:complete', function() {
+  showWelcome();
+});
+
+// 调试功能：在控制台可以查看缓存状态
+window.getCacheInfo = function() {
+  const info = cacheManager.getInfo();
+  console.log('缓存状态:', info);
+  return info;
+};
+
+// 调试功能：清除缓存
+window.clearLocationCache = function() {
+  cacheManager.clear();
+  console.log('位置缓存已清除');
+  return '缓存已清除';
+};
 
 /* 欢迎信息 end */
 
