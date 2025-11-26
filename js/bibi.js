@@ -186,6 +186,8 @@ function renderBibiCards(data) {
             </div>
         `;
         bbInfo.textContent = '💭 我的唠叨 (0)';
+        // 即使是空状态，也要移除loading类，以防万一
+        bbMain.classList.remove('loading'); 
         return;
     }
     
@@ -222,6 +224,8 @@ function renderBibiCards(data) {
     // 应用瀑布流布局
     setTimeout(() => {
         waterfallLayout(bbMain, items);
+        // ✅ 【关键】在布局完成后，移除 'loading' 类，让卡片瞬间显示
+        bbMain.classList.remove('loading');
     }, 100);
 }
 

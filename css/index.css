@@ -6220,32 +6220,101 @@ blockquote.pullquote.right {
 .read-mode #article-container .note .note-icon {
   color: var(--font-color);
 }
-/* root伪类指定全局颜色 */
+/* 粉棕色系主题CSS变量定义 - 从source/css/custom.css导入 */
 :root {
-  --blue-custom: #5ea6e5;
-  --loading-color: rgba(207, 246, 247, 0.92);
-  --border-color: #c9c9c9;
+  /* 核心颜色 */
+  --global-bg: #fbebec;
+  --font-color: #5a4a4a;
+  --text-color: #5a4a4a;
+  --header-text-color: #5a4a4a;
+  --global-font-color: #5a4a4a;
+  
+  /* 链接和交互元素 */
+  --a-link-color: #d4a8ab;
+  --a-hover-color: #c4989b;
+  --text-hover: #d4a8ab;
+  --btn-hover-color: #c4989b;
+  --button-hover-color: #c4989b;
+  
+  /* 卡片和容器 */
+  --card-bg: #fbebec;
+  --aside-card-bg: #fbebec;
+  --search-bg: #fbebec;
+  --btn-bg: #fbebec;
+  --btn-color: #8a6d6f;
+  --btn-hover-bg: #f8d7d9;
+  --btn-hover-color: #7a5d5f;
+  
+  /* 边框和分割线 */
+  --border-color: #fbebec;
+  --hr-border: #fbebec;
+  --hr-color: #fbebec;
+  --hr-before-color: #f8d7d9;
+  --border-left: #f8d7d9;
+  --border-style: 1px solid rgb(169, 169, 169);
+  
+  /* 代码高亮 */
+  --code-bg: #fbf7f8;
+  --code-block-bg: #fbf7f8;
+  --code-color: #d4a8ab;
+  --inline-code-bg: #fbf7f8;
+  --hltools-bg: #fbebec;
+  --hltools-color: #d4a8ab;
+  --hlnumber-bg: rgb(212 168 171 / 40%);
+  --hlnumber-color: #000;
+  --hl-bg: rgb(212 168 171 / 40%);
+  --hl-color: #000;
+  --highlight-bg: rgb(212 168 171 / 40%);
+  --hlexpand-bg: #f8d7d98a;
+  --hlscrollbar-bg: #352929;
+  
+  /* 引用块 */
+  --blockquote-padding-color: #f8d7d9;
+  --blockquote-bg-color: #fbf7f8;
+  
+  /* 文字选择 */
+  --text-selection-bg: rgba(212, 168, 171, 0.6);
+  --text-selection-color: #5a4a4a;
+  --code-selection-bg: rgba(139, 97, 100, 0.7);
+  --code-selection-color: #ffffff;
+  
+  /* 元素颜色 */
+  --meta-color: #8a7e7e;
+  --search-input-color: #5a4a4a;
+  --search-a-color: #5a4a4a;
+  --title-prefix-color: #d4a8ab;
+  --toc-color: #d4a8ab;
+  --paginator-color: #d4a8ab;
+  --scrollbar-color: #f8d7d9;
+  
+  /* 阴影 */
+  --card-box-shadow: 0 3px 8px 6px rgba(251, 235, 236, 0.3);
+  --card-hover-box-shadow: 0 5px 15px 10px rgba(251, 235, 236, 0.5);
+  
+  /* 时间线 */
+  --timeline-bg: #fbebec94;
+  --timeline-color: #fbebec;
+  
+  /* 功能变量 */
+  --trans-light: rgba(251, 235, 236, 0.58);
+  --trans-dark: rgba(25, 25, 25, 0.48);
+  --backdrop-filter: blur(5px) saturate(150%);
+  --snackbar-bg-light: #f8d7d9;
+  --snackbar-bg-dark: #4a3a3a;
+  --meta-theme-color-light: #fefefe;
+  --meta-theme-color-dark: #2a1f1f;
+  
+  /* 保留原始文件中的一些特定颜色，用于图标和特殊效果 */
   --color-red: rgb(241, 71, 71);
   --color-orange: rgb(241, 162, 71);
   --color-yellow: rgb(241, 238, 71);
-  --color-purple: rgb(179, 71, 241);
-  --color-blue: rgb(102, 204, 255);
-  --color-gray: rgb(226, 226, 226);
   --color-green: rgb(57, 197, 187);
-  --color-whitegray: rgb(241, 241, 241);
+  --color-blue: rgb(102, 204, 255);
+  --color-purple: rgb(179, 71, 241);
   --color-pink: rgb(237, 112, 155);
-  --color-black: rgb(0, 0, 0);
-  --color-darkblue: rgb(97, 100, 159);
-  --color-heoblue: rgb(66, 90, 239);
-  --btn-bg: var(--theme-color) !important;
-  --scrollbar-color: var(--theme-color) !important;
-  --border-style: 1px solid rgba(169, 169, 169, 0.7);
-  /* 代码框行数背景色 */
-  --hlnumber-bg: #282c34;
-  /* 代码框顶部背景色 */
-  --hltools-bg: #1c1c1c;
-  /* 代码框背景色 */
-  --hl-bg: #282c34;
+  
+  /* 主题色设置（覆盖默认主题色） */
+  --theme-color: #d4a8ab;
 }
 
 /* 滚动条样式 */
@@ -6354,9 +6423,31 @@ center#name-container {
   /* transform: translateX(-50%) !important; */
   /* transform: translateY(-100%) !important; */
 }
+/* 移动端响应式样式 - 768px及以下 */
 @media screen and (max-width: 768px) {
+  /* 隐藏名称容器 */
   center#name-container {
     display: none;
+  }
+  
+  /* 表情图片响应式大小 */
+  .tk-comment .vemoji[alt|="Menhera"],
+  .tk-comment .tk-owo-emotion[alt*="Menhera"],
+  .tk-comment .vemoji[alt|="Snow"],
+  .tk-comment .tk-owo-emotion[alt*="Snow"],
+  .tk-comment .vemoji[alt|="Sweetie"],
+  .tk-comment .tk-owo-emotion[alt*="Sweetie"],
+  .tk-comment .vemoji[alt|="Tsuri"],
+  .tk-comment .tk-owo-emotion[alt*="Tsuri"],
+  .tk-comment .vemoji[alt|="Yurui"],
+  .tk-comment .tk-owo-emotion[alt*="Yurui"] {
+    max-width: calc(100% - 30px) !important;
+    max-height: calc(100% - 30px) !important;
+  }
+  
+  /* 隐藏雪花效果 */
+  #snow {
+    display: none !important;
   }
 }
 
@@ -6434,43 +6525,128 @@ div#archive {
   backdrop-filter: var(--backdrop-filter);
 }
 
-/* ===== 黑暗模式适配 ===== */
+/* ===== 黑暗模式适配 - 从source/css/custom.css导入 ===== */
 [data-theme="dark"] {
-  /* 首页文章卡片 - 黑暗模式 */
-  #recent-posts > .recent-post-item {
-    background: var(--trans-dark) !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
-  }
-
-  /* 首页侧栏卡片 - 黑暗模式 */
-  #aside-content .card-widget {
-    background: var(--trans-dark) !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
-  }
-
-  /* 文章页、归档页、普通页面 - 黑暗模式 */
-  div#post,
-  div#page,
-  div#archive {
-    background: var(--trans-dark) !important;
-    border: 1px solid var(--border-color) !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
-  }
-
-  /* 导航栏颜色 - 黑暗模式 */
-  #page-header.nav-fixed #nav {
-    background: linear-gradient(60deg, rgba(42, 31, 31, 0.8) 0, rgba(58, 47, 47, 0.9) 53%) !important;
-    opacity: 0.95 !important;
-    backdrop-filter: var(--backdrop-filter) !important;
-    border-bottom: 1px solid var(--border-color) !important;
-  }
-}
-
-/* ===== 使用您的主题变量优化 ===== */
-[data-theme="dark"] {
-  /* 更精确的黑暗模式适配 */
+  /* 核心颜色 */
+  --global-bg: #2a1f1f;
+  --font-color: #e8d6d8;
+  --text-color: #e8d6d8;
+  --header-text-color: #e8d6d8;
+  --global-font-color: #e8d6d8;
+  
+  /* 链接和交互元素 */
+  --a-link-color: #d4a8ab;
+  --a-hover-color: #c4989b;
+  --text-hover: #d4a8ab;
+  --btn-hover-color: #c4989b;
+  --button-hover-color: #c4989b;
+  
+  /* 卡片和容器 */
+  --card-bg: #352929;
+  --aside-card-bg: #4a3a3a;
+  --search-bg: #352929;
+  --btn-bg: #4a3a3a;
+  --btn-color: #e8d6d8;
+  --btn-hover-bg: #5a4a4a;
+  
+  /* 边框和分割线 */
+  --border-color: #4a3a3a;
+  --hr-border: #4a3a3a;
+  --hr-color: #4a3a3a;
+  --hr-before-color: #d4a8ab;
+  --border-left: #f8d7d9;
+  --border-style: 1px solid rgb(169, 169, 169);
+  
+  /* 代码高亮 */
+  --code-bg: #3a2f2f;
+  --code-block-bg: #3a2f2f;
+  --code-color: #d4a8ab;
+  --inline-code-bg: #3a2f2f;
+  --hltools-bg: #3a2f2f;
+  --hltools-color: #e8d6d8;
+  --hlnumber-bg: #2a1f1f;
+  --hlnumber-color: #b8a8a8;
+  --hl-bg: #2a1f1f;
+  --hl-color: #e8d6d8;
+  --highlight-bg: rgb(212 168 171 / 40%);
+  --hlexpand-bg: linear-gradient(180deg, rgba(42,31,31,0.6), rgba(42,31,31,0.9));
+  --hlscrollbar-bg: #352929;
+  
+  /* 引用块 */
+  --blockquote-padding-color: #5a4a4a;
+  --blockquote-bg-color: #3a2f2f;
+  
+  /* 文字选择 */
+  --text-selection-bg: rgba(212, 168, 171, 0.7);
+  --text-selection-color: #2a1f1f;
+  --code-selection-bg: rgba(180, 130, 133, 0.8);
+  --code-selection-color: #2a1f1f;
+  
+  /* 元素颜色 */
+  --meta-color: #b8a8a8;
+  --search-input-color: #e8d6d8;
+  --search-a-color: #e8d6d8;
+  --title-prefix-color: #d4a8ab;
+  --toc-color: #d4a8ab;
+  --paginator-color: #d4a8ab;
+  --scrollbar-color: #5a4a4a;
+  
+  /* 阴影 */
+  --card-box-shadow: 0 3px 8px 6px rgba(0, 0, 0, 0.3);
+  --card-hover-box-shadow: 0 5px 15px 10px rgba(0, 0, 0, 0.4);
+  
+  /* 时间线 */
+  --timeline-bg: #352929;
+  --timeline-color: #fbebec;
+  
+  /* 功能变量 */
+  --trans-light: rgba(251, 235, 236, 0.58);
+  --trans-dark: rgba(25, 25, 25, 0.48);
+  --backdrop-filter: blur(5px) saturate(150%);
+  --snackbar-bg-light: #f8d7d9;
+  --snackbar-bg-dark: #5a4a4a;
+  --meta-theme-color-light: #fefefe;
+  --meta-theme-color-dark: #2a1f1f;
+  
+  /* 补充变量 */
+  --search-result-title: #e8d6d8;
+  --search-result-content: #b8a8a8;
+  --preloader-bg: #2a1f1f;
+  --preloader-color: #e8d6d8;
+  --tab-border-color: #4a3a3a;
+  --tab-botton-bg: #4a3a3a;
+  --tab-botton-color: #e8d6d8;
+  --tab-button-hover-bg: #5a4a4a;
+  --tab-button-active-bg: #352929;
+  --sidebar-bg: #2a1f1f;
+  --text-bg-hover: #4a3a3a;
+  --text-highlight-color: #e8d6d8;
+  --blockquote-color: #e8d6d8;
+  --reward-pop: #352929;
+  --white: #e8d6d8;
+  --light-grey: #e8d6d8;
+  --dark-grey: rgba(232,214,216,0.2);
+  --table-bg: #352929;
+  --table-th-bg: #4a3a3a;
+  --table-border-color: #4a3a3a;
+  --nav-bg: #2a1f1f;
+  --nav-color: #e8d6d8;
+  --nav-hover-bg: #4a3a3a;
+  --tag-bg: #4a3a3a;
+  --tag-color: #e8d6d8;
+  --tag-hover-bg: #5a4a4a;
+  --footer-bg: #2a1f1f;
+  --footer-color: #b8a8a8;
+  --img-bg: #352929;
+  --img-border: #4a3a3a;
+  --info-bg: #3a2f2f;
+  --warning-bg: #4a3a3a;
+  --error-bg: #5a3a3a;
+  
+  /* 主题色设置（覆盖默认主题色） */
+  --theme-color: #d4a8ab;
+  
+  /* 组件样式 */
   #recent-posts > .recent-post-item,
   #aside-content .card-widget,
   div#post,
@@ -6479,6 +6655,7 @@ div#archive {
     background: rgba(42, 31, 31, 0.8) !important;
     backdrop-filter: blur(10px) saturate(180%) !important;
     border: 1px solid rgba(74, 58, 58, 0.6) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
   }
 
   /* 导航栏深色渐变 */
@@ -6487,6 +6664,9 @@ div#archive {
       rgba(42, 31, 31, 0.9) 0%, 
       rgba(53, 41, 41, 0.95) 50%,
       rgba(58, 47, 47, 0.9) 100%) !important;
+    opacity: 0.95 !important;
+    backdrop-filter: var(--backdrop-filter) !important;
+    border-bottom: 1px solid var(--border-color) !important;
   }
 }
 
@@ -6614,24 +6794,10 @@ div#archive {
   display: block !important;
 }
 
-/* 手机端适配 */
-@media screen and (max-width: 768px) {
-  .tk-comment .vemoji[alt|="Menhera"],
-  .tk-comment .tk-owo-emotion[alt*="Menhera"],
-  .tk-comment .vemoji[alt|="Snow"],
-  .tk-comment .tk-owo-emotion[alt*="Snow"],
-  .tk-comment .vemoji[alt|="Sweetie"],
-  .tk-comment .tk-owo-emotion[alt*="Sweetie"],
-  .tk-comment .vemoji[alt|="Tsuri"],
-  .tk-comment .tk-owo-emotion[alt*="Tsuri"],
-  .tk-comment .vemoji[alt|="Yurui"],
-  .tk-comment .tk-owo-emotion[alt*="Yurui"] {
-    max-width: calc(100% - 30px) !important;
-    max-height: calc(100% - 30px) !important;
-  }
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Menhera"],
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Snow"],
-  .OwO .OwO-body .OwO-items-image .OwO-item[title*="Sweetie"],
+/* 表情选择器样式 - 已在主媒体查询块中定义响应式规则 */
+.OwO .OwO-body .OwO-items-image .OwO-item[title*="Menhera"],
+.OwO .OwO-body .OwO-items-image .OwO-item[title*="Snow"],
+.OwO .OwO-body .OwO-items-image .OwO-item[title*="Sweetie"],
   .OwO .OwO-body .OwO-items-image .OwO-item[title*="Tsuri"],
   .OwO .OwO-body .OwO-items-image .OwO-item[title*="Yurui"] {
     max-width: calc(33% - 10px);
@@ -6644,7 +6810,7 @@ div#archive {
     max-width: calc(18% - 10px) !important;
     box-sizing: content-box;
   }
-}
+/* 修复：移除多余的孤立右大括号 */
 
 /* 右下角闭眼 */
 .el-textarea__inner {
@@ -6811,53 +6977,27 @@ div#archive {
 }
 .tk-content:hover + .tk-extras {
   -webkit-animation: tk-extras-fadeIn 0.5s linear;
-  -moz-animation: tk-extras-fadeIn 0.5s linear;
-  -o-animation: tk-extras-fadeIn 0.5s linear;
-  -ms-animation: tk-extras-fadeIn 0.5s linear;
   animation: tk-extras-fadeIn 0.5s linear;
   -webkit-animation-fill-mode: forwards;
-  -moz-animation-fill-mode: forwards;
-  -o-animation-fill-mode: forwards;
-  -ms-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
-@-moz-keyframes tk-extras-fadeIn {
-  from {
-    opacity: 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-  }
-  to {
-    opacity: 1;
-    -ms-filter: none;
-    filter: none;
-  }
-}
-@-webkit-keyframes tk-extras-fadeIn {
-  from {
-    opacity: 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-  }
-  to {
-    opacity: 1;
-    -ms-filter: none;
-    filter: none;
-  }
-}
-@-o-keyframes tk-extras-fadeIn {
-  from {
-    opacity: 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
-  }
-  to {
-    opacity: 1;
-    -ms-filter: none;
-    filter: none;
-  }
-}
+
+/* 合并的跨浏览器兼容动画 */
 @keyframes tk-extras-fadeIn {
+  from {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+  to {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+  }
+}
+
+/* 为旧版WebKit浏览器添加前缀（现代浏览器已不再需要） */
+@-webkit-keyframes tk-extras-fadeIn {
   from {
     opacity: 0;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -6881,18 +7021,18 @@ h6::before {
   -webkit-animation: ccc 4s linear infinite;
   animation: ccc 4s linear infinite;
 }
-/* 控制风车转动方向 -1turn 为逆时针转动，1turn 为顺时针转动，相同数字部分记得统一修改 */
-@-webkit-keyframes ccc {
+/* 控制风车转动方向 -1turn 为逆时针转动 */
+@keyframes ccc {
   0% {
-    -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   to {
-    -webkit-transform: rotate(-1turn);
     transform: rotate(-1turn);
   }
 }
-@keyframes ccc {
+
+/* 为旧版WebKit浏览器添加前缀 */
+@-webkit-keyframes ccc {
   0% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
@@ -6960,13 +7100,15 @@ h6::before {
 }
 
 
-/* 图片模糊渐变清晰 */
-/*3s为加载动画的时间，1为加载动画的次数，ease-in-out为动画效果*/
+/* 图片模糊渐变清晰 - 合并的跨浏览器动画 */
+/* 1s为加载动画的时间，1为加载动画的次数，ease-in-out为动画效果 */
 #page-header,
 #web_bg {
   -webkit-animation: imgblur 1s 1 ease-in-out;
   animation: imgblur 1s 1 ease-in-out;
 }
+
+/* 主动画定义 */
 @keyframes imgblur {
   0% {
     filter: blur(5px);
@@ -6975,13 +7117,16 @@ h6::before {
     filter: blur(0px);
   }
 }
-/*适配使用-webkit内核的浏览器 */
+
+/* 为旧版WebKit浏览器添加前缀 */
 @-webkit-keyframes imgblur {
   0% {
     -webkit-filter: blur(5px);
+    filter: blur(5px);
   }
   100% {
     -webkit-filter: blur(0px);
+    filter: blur(0px);
   }
 }
 
@@ -6996,11 +7141,17 @@ h6::before {
   min-width: 300px;
 }
 
-/* 平板尺寸自适应(不启用侧边栏宽度限制) */
+/* 平板尺寸自适应 - 900px及以下 */
 @media screen and (max-width: 900px) {
+  /* 侧边栏宽度自适应 */
   .aside-content {
     max-width: none !important;
     padding: 0 5px 0 5px;
+  }
+  
+  /* 友链布局调整 - 3列显示 */
+  .site-card {
+    width: calc(100% / 3 - 16px) !important;
   }
 }
 
@@ -7030,11 +7181,7 @@ h6::before {
     width: calc(100% / 4 - 16px) !important;
   }
 }
-@media screen and (max-width: 900px) {
-  .site-card {
-    width: calc(100% / 3 - 16px) !important;
-  }
-}
+/* 900px响应式规则已合并到主媒体查询块 */
 @media screen and (max-width: 600px) {
   .site-card {
     width: calc(100% / 2 - 16px) !important;
@@ -7590,15 +7737,6 @@ li.categoryBar-list-item {
 [data-theme="dark"] #snow {
   display: none !important;
 }
-
-/* 雪花手机模式不显示 */
-@media screen and (max-width: 768px) {
-  #snow {
-    display: none !important;
-  }
-}
-
-
 
 /* 二级菜单圆角 */
 #nav .menus_items .menus_item .menus_item_child,

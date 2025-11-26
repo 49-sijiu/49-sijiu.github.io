@@ -1,128 +1,176 @@
-/* === 粉棕色系主题CSS变量 - 开始 === */
+/* ==========================================================================
+   粉棕色系主题CSS变量定义
+   ========================================================================== */
+
+/* 浅色模式变量 */
 :root {
-  /* 主题色变量 */
+  /* 核心颜色 */
   --global-bg: #fbebec;
   --font-color: #5a4a4a;
-  --hr-border: #fbebec;
-  --hr-before-color: #f8d7d9;
-  --search-bg: #fbebec;
-  --search-input-color: #5a4a4a;
-  --search-a-color: #5a4a4a;
+  --text-color: #5a4a4a;
+  --header-text-color: #5a4a4a;
+  --global-font-color: #5a4a4a;
+  
+  /* 链接和交互元素 */
+  --a-link-color: #d4a8ab;
+  --a-hover-color: #c4989b;
+  --text-hover: #d4a8ab;
+  --btn-hover-color: #c4989b;
+  --button-hover-color: #c4989b;
+  
+  /* 卡片和容器 */
   --card-bg: #fbebec;
-  --card-box-shadow: 0 3px 8px 6px rgba(251, 235, 236, 0.3);
-  --card-hover-box-shadow: 0 5px 15px 10px rgba(251, 235, 236, 0.5);
+  --aside-card-bg: #fbebec;
+  --search-bg: #fbebec;
   --btn-bg: #fbebec;
   --btn-color: #8a6d6f;
   --btn-hover-bg: #f8d7d9;
   --btn-hover-color: #7a5d5f;
-  --text-color: #5a4a4a;
-  --text-hover: #d4a8ab;
-  --header-text-color: #5a4a4a;
-  --a-link-color: #d4a8ab;
-  --a-hover-color: #c4989b;
+  
+  /* 边框和分割线 */
   --border-color: #fbebec;
-  --code-bg: #fbf7f8;
-  --code-color: #d4a8ab;
-  --code-block-bg: #fbf7f8;
-  --aside-card-bg: #fbebec;                    /* 侧边栏卡片背景 */
-  --snackbar-bg-light: #f8d7d9;               /* 浅色模式消息通知背景 */
-  --snackbar-bg-dark: #4a3a3a;                /* 深色模式消息通知背景 */
-  --title-prefix-color: #d4a8ab;              /* 标题前缀图标颜色 */
-  --global-font-color: #5a4a4a;               /* 全局字体颜色 */
-  --inline-code-bg: #fbf7f8;              /* 行内代码背景 */
-  --hltools-bg: #fbebec; 
-  --hltools-color: #d4a8ab;
-  --timeline-bg: #fbebec94;
+  --hr-border: #fbebec;
+  --hr-color: #fbebec;
+  --hr-before-color: #f8d7d9;
   --border-left: #f8d7d9;
-  --timeline-color: #fbebec;
+  --border-style: 1px solid rgb(169, 169, 169);
+  
+  /* 代码高亮 */
+  --code-bg: #fbf7f8;
+  --code-block-bg: #fbf7f8;
+  --code-color: #d4a8ab;
+  --inline-code-bg: #fbf7f8;
+  --hltools-bg: #fbebec;
+  --hltools-color: #d4a8ab;
+  --hlnumber-bg: rgb(212 168 171 / 40%);
+  --hlnumber-color: #000;
+  --hl-bg: rgb(212 168 171 / 40%);
+  --hl-color: #000;
+  --highlight-bg: rgb(212 168 171 / 40%);
   --hlexpand-bg: #f8d7d98a;
-
+  --hlscrollbar-bg: #352929;
   
+  /* 引用块 */
+  --blockquote-padding-color: #f8d7d9;
+  --blockquote-bg-color: #fbf7f8;
   
-  /* 新增变量 - 保持粉棕色系 */
-  --paginator-color: #d4a8ab;           /* 分页器颜色 */
-  --button-hover-color: #c4989b;        /* 按钮悬停色 */
-  --text-selection-bg: rgba(212, 168, 171, 0.6);      /* 文字选中背景 - 提高不透明度增强对比度 */
-  --text-selection-color: #5a4a4a;                    /* 文字选中颜色 */
-  --code-selection-bg: rgba(139, 97, 100, 0.7);       /* 代码块文字选中背景 - 更深的粉色确保可读性 */
-  --code-selection-color: #ffffff;                    /* 代码块文字选中颜色 - 白色文字 */
-  --link-color: #d4a8ab;                /* 链接颜色 */
-  --meta-color: #8a7e7e;                /* 元信息颜色 */
-  --hr-color: #fbebec;                  /* 分割线颜色 */
-  --toc-color: #d4a8ab;                 /* 目录颜色 */
-  --blockquote-padding-color: #f8d7d9;  /* 引用块边框色 */
-  --blockquote-bg-color: #fbf7f8;       /* 引用块背景色 */
-  --scrollbar-color: #f8d7d9;           /* 滚动条颜色 */
-  --meta-theme-color-light: #fefefe;    /* 浅色主题色 */
-  --meta-theme-color-dark: #2a1f1f;     /* 深色主题色 */
-    /* 代码高亮相关变量 - 浅色模式 */
-  --hlnumber-bg: #rgb(212 168 171 / 40%);              /* 行号背景 - 使用您的代码背景色 */
-  --hlnumber-color: #000;           /* 行号颜色 - 使用您的元信息颜色 */
-  --hl-bg: #rgb(212 168 171 / 40%);                    /* 代码背景 - 使用您的代码背景色 */
-  --hl-color: #000;                 /* 代码文字 - 使用您的字体颜色 */
-  --highlight-bg: #rgb(212 168 171 / 40%);             /* 阅读模式代码背景 - 使用卡片背景色 */
+  /* 文字选择 */
+  --text-selection-bg: rgba(212, 168, 171, 0.6);
+  --text-selection-color: #5a4a4a;
+  --code-selection-bg: rgba(139, 97, 100, 0.7);
+  --code-selection-color: #ffffff;
   
-  /* 确保边框颜色一致 */
-  --border-color: #fbebec;             /* 代码框边框 */
+  /* 元素颜色 */
+  --meta-color: #8a7e7e;
+  --search-input-color: #5a4a4a;
+  --search-a-color: #5a4a4a;
+  --title-prefix-color: #d4a8ab;
+  --toc-color: #d4a8ab;
+  --paginator-color: #d4a8ab;
+  --scrollbar-color: #f8d7d9;
+  
+  /* 阴影 */
+  --card-box-shadow: 0 3px 8px 6px rgba(251, 235, 236, 0.3);
+  --card-hover-box-shadow: 0 5px 15px 10px rgba(251, 235, 236, 0.5);
+  
+  /* 时间线 */
+  --timeline-bg: #fbebec94;
+  --timeline-color: #fbebec;
   
   /* 功能变量 */
   --trans-light: rgba(251, 235, 236, 0.58);
   --trans-dark: rgba(25, 25, 25, 0.48);
-  --border-style: 1px solid rgb(169, 169, 169);
   --backdrop-filter: blur(5px) saturate(150%);
+  --snackbar-bg-light: #f8d7d9;
+  --snackbar-bg-dark: #4a3a3a;
+  --meta-theme-color-light: #fefefe;
+  --meta-theme-color-dark: #2a1f1f;
 }
 
+/* 深色模式变量 */
 [data-theme="dark"] {
-  /* 暗色模式主题色 - 您原有的设置 */
+  /* 核心颜色 */
   --global-bg: #2a1f1f;
   --font-color: #e8d6d8;
-  --hr-border: #4a3a3a;
-  --hr-before-color: #d4a8ab;
-  --search-bg: #352929;
-  --search-input-color: #e8d6d8;
-  --search-a-color: #e8d6d8;
+  --text-color: #e8d6d8;
+  --header-text-color: #e8d6d8;
+  --global-font-color: #e8d6d8;
+  
+  /* 链接和交互元素 */
+  --a-link-color: #d4a8ab;
+  --a-hover-color: #c4989b;
+  --text-hover: #d4a8ab;
+  --btn-hover-color: #c4989b;
+  --button-hover-color: #c4989b;
+  
+  /* 卡片和容器 */
   --card-bg: #352929;
-  --card-box-shadow: 0 3px 8px 6px rgba(0, 0, 0, 0.3);
-  --card-hover-box-shadow: 0 5px 15px 10px rgba(0, 0, 0, 0.4);
+  --aside-card-bg: #4a3a3a;
+  --search-bg: #352929;
   --btn-bg: #4a3a3a;
   --btn-color: #e8d6d8;
   --btn-hover-bg: #5a4a4a;
-  --text-color: #e8d6d8;
-  --header-text-color: #e8d6d8;
-  --a-link-color: #d4a8ab;
-  --a-hover-color: #c4989b;
+  
+  /* 边框和分割线 */
   --border-color: #4a3a3a;
+  --hr-border: #4a3a3a;
+  --hr-color: #4a3a3a;
+  --hr-before-color: #d4a8ab;
+  --border-left: #f8d7d9;
+  --border-style: 1px solid rgb(169, 169, 169);
+  
+  /* 代码高亮 */
   --code-bg: #3a2f2f;
-  --code-color: #d4a8ab;
   --code-block-bg: #3a2f2f;
-  --aside-card-bg: #4a3a3a;
-  --snackbar-bg-light: #f8d7d9;
-  --snackbar-bg-dark: #5a4a4a;
-  --title-prefix-color: #d4a8ab;
-  --global-font-color: #e8d6d8;
+  --code-color: #d4a8ab;
   --inline-code-bg: #3a2f2f;
   --hltools-bg: #3a2f2f;
   --hltools-color: #e8d6d8;
+  --hlnumber-bg: #2a1f1f;
+  --hlnumber-color: #b8a8a8;
+  --hl-bg: #2a1f1f;
+  --hl-color: #e8d6d8;
+  --highlight-bg: rgb(212 168 171 / 40%);
+  --hlexpand-bg: linear-gradient(180deg, rgba(42,31,31,0.6), rgba(42,31,31,0.9));
+  --hlscrollbar-bg: #352929;
   
-  /* 暗色模式新增变量 - 您原有的设置 */
-  --paginator-color: #d4a8ab;
-  --button-hover-color: #c4989b;
+  /* 引用块 */
+  --blockquote-padding-color: #5a4a4a;
+  --blockquote-bg-color: #3a2f2f;
+  
+  /* 文字选择 */
   --text-selection-bg: rgba(212, 168, 171, 0.7);
   --text-selection-color: #2a1f1f;
   --code-selection-bg: rgba(180, 130, 133, 0.8);
   --code-selection-color: #2a1f1f;
+  
+  /* 元素颜色 */
   --meta-color: #b8a8a8;
-  --hr-color: #4a3a3a;
-  --code-foreground: #e8c8cb;
-  --code-background: #3a2f2f;
+  --search-input-color: #e8d6d8;
+  --search-a-color: #e8d6d8;
+  --title-prefix-color: #d4a8ab;
   --toc-color: #d4a8ab;
-  --blockquote-padding-color: #5a4a4a;
-  --blockquote-bg-color: #3a2f2f;
+  --paginator-color: #d4a8ab;
   --scrollbar-color: #5a4a4a;
+  
+  /* 阴影 */
+  --card-box-shadow: 0 3px 8px 6px rgba(0, 0, 0, 0.3);
+  --card-hover-box-shadow: 0 5px 15px 10px rgba(0, 0, 0, 0.4);
+  
+  /* 时间线 */
+  --timeline-bg: #352929;
+  --timeline-color: #fbebec;
+  
+  /* 功能变量 */
+  --trans-light: rgba(251, 235, 236, 0.58);
+  --trans-dark: rgba(25, 25, 25, 0.48);
+  --backdrop-filter: blur(5px) saturate(150%);
+  --snackbar-bg-light: #f8d7d9;
+  --snackbar-bg-dark: #5a4a4a;
   --meta-theme-color-light: #fefefe;
   --meta-theme-color-dark: #2a1f1f;
-
-  /* 补完的变量 - 根据您的色系统一调整 */
+  
+  /* 补充变量 */
   --search-result-title: #e8d6d8;
   --search-result-content: #b8a8a8;
   --preloader-bg: #2a1f1f;
@@ -136,13 +184,6 @@
   --text-bg-hover: #4a3a3a;
   --text-highlight-color: #e8d6d8;
   --blockquote-color: #e8d6d8;
-  --timeline-bg: #352929;
-  --hl-color: #e8d6d8;
-  --hl-bg: #2a1f1f;
-  --hlnumber-bg: #2a1f1f;
-  --hlnumber-color: #b8a8a8;
-  --hlscrollbar-bg: #352929;
-  --hlexpand-bg: linear-gradient(180deg, rgba(42,31,31,0.6), rgba(42,31,31,0.9));
   --reward-pop: #352929;
   --white: #e8d6d8;
   --light-grey: #e8d6d8;
@@ -165,13 +206,47 @@
   --error-bg: #5a3a3a;
 }
 
-* {
+/* ==========================================================================
+   全局样式和过渡效果
+   ========================================================================== */
+
+/* 性能优化：避免使用全局选择器 */
+body, a, button, input, textarea, select, 
+#post .post-copyright, 
+#post .tag_share .post-meta__tags,
+#speaks,
+blockquote,
+#aside-content #card-toc .toc-content .toc-link {
   transition: all 0.3s ease;
 }
-/* === 粉棕色系主题CSS变量 - 结束 === */
 
+/* 文字选择样式 */
+::selection {
+  background-color: var(--text-selection-bg);
+  color: var(--text-selection-color);
+}
 
-/* 在您的自定义CSS中覆盖 */
+/* 代码块文字选择样式 */
+pre ::selection {
+  background-color: var(--code-selection-bg);
+  color: var(--code-selection-color);
+}
+
+/* ==========================================================================
+   页面布局和背景
+   ========================================================================== */
+
+/* 页脚与头图透明 */
+#footer, #page-header {
+  background: transparent !important;
+}
+
+/* 遮罩透明 */
+#footer::before, #page-header::before {
+  background: transparent !important;
+}
+
+/* 深色模式遮罩 */
 [data-theme="dark"] #web_bg::before {
   position: absolute;
   width: 100%;
@@ -180,52 +255,33 @@
   content: '';
 }
 
-/* 页脚与头图透明 */
-#footer {
-  background: transparent !important;
-}
-#page-header {
-  background: transparent !important;
-}
+/* ==========================================================================
+   分页和目录
+   ========================================================================== */
 
-/* 白天模式遮罩透明 */
-#footer::before {
-  background: transparent !important;
-}
-#page-header::before {
-  background: transparent !important;
-}
-
-/* 夜间模式遮罩透明 - 只保留必要的 */
-[data-theme="dark"] #footer::before {
-  background: transparent !important;
-}
-[data-theme="dark"] #page-header::before {
-  background: transparent !important;
-}
-
-/* 修改分页当前页背景色 */
+/* 分页当前页背景色 */
 #pagination .page-number.current {
-  background: var(--a-link-color) !important;  /* 使用您的链接颜色 */
+  background: var(--a-link-color) !important;
   background-color: var(--a-link-color) !important;
   color: white !important;
 }
 
-
-/* TOC目录激活链接样式 - 匹配您的主题 */
+/* TOC目录激活链接样式 */
 #aside-content #card-toc .toc-content .toc-link.active {
-  background: rgba(212, 168, 171, 0.6) !important;  /* 使用您的粉色 */
-  background-color: var(--a-link-color) !important;
-  color: var(--text-selection-color) !important;  /* 使用您的文字选中颜色 */
+  background: var(--text-selection-bg) !important;
+  color: var(--text-selection-color) !important;
 }
 
 /* TOC目录链接悬停样式 */
 #aside-content #card-toc .toc-content .toc-link:hover {
-  color: var(--a-hover-color) !important;  /* 使用您的悬停粉色 */
+  color: var(--a-hover-color) !important;
   background: rgba(212, 168, 171, 0.3) !important;
 }
 
-/* tzy页脚样式 */
+/* ==========================================================================
+   页脚样式
+   ========================================================================== */
+
 #ft {
   max-width: 1200px;
   margin: 0 auto 12px;
@@ -250,45 +306,42 @@
 }
 
 @keyframes iconAnimate {
-  0%,
-  100% {
+  0%, 100% {
     transform: scale(1);
   }
-  10%,
-  30% {
+  10%, 30% {
     transform: scale(0.9);
   }
-  20%,
-  40%,
-  60%,
-  80% {
+  20%, 40%, 60%, 80% {
     transform: scale(1.1);
   }
-  50%,
-  70% {
+  50%, 70% {
     transform: scale(1.1);
   }
 }
 
-/* 文章标签样式 - 匹配您的主题 */
+/* ==========================================================================
+   文章页样式
+   ========================================================================== */
+
+/* 文章标签样式 */
 #post .tag_share .post-meta__tags {
-  border: 1px solid #fbebec !important;  /* 使用您的粉色 */
-  color: #000 !important;             /* 使用您的粉色 */
+  border: 1px solid var(--border-color) !important;
+  color: #000 !important;
   border-radius: 6px !important;
   padding: 4px 12px !important;
-  transition: all 0.3s ease !important;
 }
 
 #post .tag_share .post-meta__tags:hover {
-  background: var(--a-link-color) !important;        /* 悬停时粉色背景 */
-  color: var(--text-selection-color) !important;     /* 悬停时深色文字 */
+  background: var(--a-link-color) !important;
+  color: var(--text-selection-color) !important;
   transform: translateY(-2px) !important;
   box-shadow: 0 4px 12px rgba(212, 168, 171, 0.3) !important;
 }
 
 /* 文章版权信息 - 浅色模式 */
 #post .post-copyright {
-  background: linear-gradient(45deg, #f8d7d9, #fbf7f8, #fbebec) !important; /* 粉棕色渐变 */
+  background: linear-gradient(45deg, #f8d7d9, #fbf7f8, #fbebec) !important;
   border: 1px solid var(--border-color) !important;
   border-radius: 8px !important;
   box-shadow: 0 4px 12px rgba(251, 235, 236, 0.5) !important;
@@ -296,7 +349,7 @@
 
 #post .post-copyright .post-copyright-meta,
 #post .post-copyright-cc-info {
-  color: var(--a-link-color) !important; /* 使用您的粉色 */
+  color: var(--a-link-color) !important;
 }
 
 #post .post-copyright a {
@@ -311,7 +364,7 @@
 
 /* 文章版权信息 - 深色模式 */
 [data-theme="dark"] #post .post-copyright {
-  background: linear-gradient(45deg, #352929, #3a2f2f, #2a1f1f) !important; /* 深色渐变 */
+  background: linear-gradient(45deg, #352929, #3a2f2f, #2a1f1f) !important;
   border: 1px solid var(--border-color) !important;
   border-radius: 8px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
@@ -331,9 +384,12 @@
   color: var(--a-hover-color) !important;
 }
 
-/* 引用块圆角样式 - 推荐 */
+/* ==========================================================================
+   引用块样式
+   ========================================================================== */
+
 blockquote {
-  border-radius: 0 12px 12px 0 !important;    /* 左侧直角保持传统，右侧圆角现代 */
+  border-radius: 0 12px 12px 0 !important;
   border-left: 4px solid var(--a-hover-color) !important;
   background-color: var(--text-selection-bg) !important;
   color: #000000 !important;
@@ -350,56 +406,64 @@ blockquote {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
+/* ==========================================================================
+   说说组件样式
+   ========================================================================== */
 
-[data-theme='light'] #speaks{
-    color:var(--hl-color);
-    font-size:18px;
-    border: 1px solid var(--lyx-border);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-    background-color: var(--lyx-white-acrylic1)!important;
-    border-radius: 12px;
-    margin-top:20px;
-    margin-bottom: 10px;
+[data-theme='light'] #speaks {
+  color: var(--hl-color);
+  font-size: 18px;
+  border: 1px solid var(--lyx-border);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  background-color: var(--lyx-white-acrylic1) !important;
+  border-radius: 12px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
-[data-theme='dark'] #speaks{
-    color:var(--lyx-white);
-    font-size:18px;
-    border: 1px solid var(--lyx-border);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-    border-radius: 12px;
-    background-color: var(--lyx-black-acrylic2)!important;
-    margin-top:20px;
-    margin-bottom:10px;
+
+[data-theme='dark'] #speaks {
+  color: var(--lyx-white);
+  font-size: 18px;
+  border: 1px solid var(--lyx-border);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border-radius: 12px;
+  background-color: var(--lyx-black-acrylic2) !important;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
-#speaks:hover{
-    border: 1px solid var(--lyx-theme);
-    box-shadow:0 0 3px var(--lyx-theme)!important;
-  
+
+#speaks:hover {
+  border: 1px solid var(--lyx-theme);
+  box-shadow: 0 0 3px var(--lyx-theme) !important;
 }
-#speaks i{
-    margin-right:10px;
-    margin-left:10px;
+
+#speaks i {
+  margin-right: 10px;
+  margin-left: 10px;
 }
-#speaks{
-    height: 56px!important;
+
+#speaks {
+  height: 56px !important;
 }
-.shuoshuo{
-    flex:1;
-    text-align: center;
+
+.shuoshuo {
+  flex: 1;
+  text-align: center;
+  transition-property: background-color, color, padding, font-size, border;
+  transition-duration: 200ms;
 }
-.shuoshuo{
-    transition-property: background-color,color,padding,font-size,border;
-    transition-duration: 200ms;
+
+.shuoshuo:hover {
+  color: var(--lyx-theme);
 }
-.shuoshuo:hover{
-    color:var(--lyx-theme); /*换成自己的颜色*/
+
+.shuoshuo {
+  white-space: nowrap;
 }
-.shuoshuo{
-    white-space: nowrap;
-} 
-#speaks-content{
-    max-width: 100%;
-    overflow: hidden;
+
+#speaks-content {
+  max-width: 100%;
+  overflow: hidden;
 }
